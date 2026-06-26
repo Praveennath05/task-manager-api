@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.Features.Tasks.Commands;
 using TaskManager.Application.Features.Tasks.Queries;
@@ -7,6 +8,13 @@ namespace TaskManager.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+
+// ── AUTHORIZE ─────────────────────────────────────────
+// Every endpoint in this controller requires a valid JWT token
+// Without token → 401 Unauthorized automatically
+// No need to check auth in each method individually
+[Authorize]
+// ─────────────────────────────────────────────────────
 public class TasksController : ControllerBase
 {
     private readonly IMediator _mediator;

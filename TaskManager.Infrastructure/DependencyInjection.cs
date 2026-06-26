@@ -49,8 +49,10 @@ public static class DependencyInjection
         // Same pattern for Auth:
         // when anyone asks for IAuthService, give them AuthService
         services.AddScoped<IAuthService, AuthService>();
-        // ─────────────────────────────────────────────────────
-
+        // ── TOKEN SERVICE ─────────────────────────────────────
+        // Registers TokenService so it can be injected into AuthService
+        // Scoped = one instance per HTTP request
+services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();        // ─────────────────────────────────────────────────────
         return services;
     }
 }

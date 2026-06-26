@@ -3893,6 +3893,7 @@
     "net10.0": [
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 10.0.9",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.9",
+      "Microsoft.OpenApi >= 2.7.5",
       "Swashbuckle.AspNetCore >= 10.2.3",
       "System.IdentityModel.Tokens.Jwt >= 8.19.1",
       "TaskManager.Application >= 1.0.0",
@@ -3962,6 +3963,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[10.0.9, )"
+          },
+          "Microsoft.OpenApi": {
+            "target": "Package",
+            "version": "[2.7.5, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
