@@ -1,5 +1,5 @@
 using MediatR;
-using TaskManager.Application.Common;
+using TaskManager.Domain.Common;
 using TaskManager.Domain.Interfaces;
 
 namespace TaskManager.Application.Features.Tasks.Commands;
@@ -17,11 +17,11 @@ public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, Resul
 
     public async Task<Result<bool>> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
     {
-        var existing = await _repository.GetByIdAsync(request.Id);
+        var existing = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (existing == null)
             return Result<bool>.Failure("Task not found");
 
-        await _repository.DeleteAsync(request.Id);
+        await _repository.DeleteAsync(request.Id, cancellationToken);
         return Result<bool>.Success(true);
     }
 }

@@ -1,5 +1,5 @@
 using MediatR;
-using TaskManager.Application.Common;
+using TaskManager.Domain.Common;
 using TaskManager.Domain.Entities;
 using TaskManager.Domain.Interfaces;
 
@@ -24,7 +24,7 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Resul
 
     public async Task<Result<WorkTask>> Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
     {
-        var existing = await _repository.GetByIdAsync(request.Id);
+        var existing = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (existing == null)
             return Result<WorkTask>.Failure("Task not found");
 
@@ -34,7 +34,7 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Resul
         existing.DueDate = request.DueDate;
         existing.UpdatedAt = DateTime.UtcNow;
 
-        var updated = await _repository.UpdateAsync(existing);
+        var updated = await _repository.UpdateAsync(existing, cancellationToken);
         return Result<WorkTask>.Success(updated);
     }
 }

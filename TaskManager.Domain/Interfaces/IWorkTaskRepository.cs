@@ -4,9 +4,12 @@ namespace TaskManager.Domain.Interfaces;
 
 public interface IWorkTaskRepository
 {
-    Task<List<WorkTask>> GetAllAsync();
-    Task<WorkTask?> GetByIdAsync(int id);
-    Task<WorkTask> CreateAsync(WorkTask task);
-    Task<WorkTask> UpdateAsync(WorkTask task);
-    Task DeleteAsync(int id);
+    // ── CANCELLATION TOKEN ────────────────────────────
+    // Allows database operations to stop if client disconnects
+    Task<List<WorkTask>> GetAllAsync(CancellationToken cancellationToken);
+    Task<WorkTask?> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<WorkTask> CreateAsync(WorkTask task, CancellationToken cancellationToken);
+    Task<WorkTask> UpdateAsync(WorkTask task, CancellationToken cancellationToken);
+    Task DeleteAsync(int id, CancellationToken cancellationToken);
+    // ─────────────────────────────────────────────────
 }

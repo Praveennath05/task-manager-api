@@ -1,5 +1,5 @@
 using MediatR;
-using TaskManager.Application.Common;
+using TaskManager.Domain.Common;
 using TaskManager.Domain.Entities;
 using TaskManager.Domain.Interfaces;
 
@@ -18,7 +18,7 @@ public class GetAllTasksQueryHandler : IRequestHandler<GetAllTasksQuery, Result<
 
     public async Task<Result<List<WorkTask>>> Handle(GetAllTasksQuery request, CancellationToken cancellationToken)
     {
-        var tasks = await _repository.GetAllAsync();
+        var tasks = await _repository.GetAllAsync(cancellationToken);
         return Result<List<WorkTask>>.Success(tasks);
     }
 }

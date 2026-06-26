@@ -1,5 +1,5 @@
 using MediatR;
-using TaskManager.Application.Common;
+using TaskManager.Domain.Common;
 using TaskManager.Domain.Entities;
 using TaskManager.Domain.Interfaces;
 
@@ -18,7 +18,7 @@ public class GetTaskByIdQueryHandler : IRequestHandler<GetTaskByIdQuery, Result<
 
     public async Task<Result<WorkTask>> Handle(GetTaskByIdQuery request, CancellationToken cancellationToken)
     {
-        var task = await _repository.GetByIdAsync(request.Id);
+        var task = await _repository.GetByIdAsync(request.Id,cancellationToken);
         if (task == null)
             return Result<WorkTask>.Failure("Task not found");
 

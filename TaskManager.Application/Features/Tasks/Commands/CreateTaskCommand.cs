@@ -1,5 +1,5 @@
 using MediatR;
-using TaskManager.Application.Common;
+using TaskManager.Domain.Common;
 using TaskManager.Domain.Interfaces;
 using TaskManager.Domain.Entities;
 
@@ -28,7 +28,7 @@ public async Task<Result<WorkTask>> Handle(CreateTaskCommand request, Cancellati
         DueDate = request.DueDate
     };
 
-    var created = await _repository.CreateAsync(task);
+    var created = await _repository.CreateAsync(task,cancellationToken);
     return Result<WorkTask>.Success(created);
 }
 }

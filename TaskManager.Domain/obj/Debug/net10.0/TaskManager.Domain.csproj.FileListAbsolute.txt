@@ -9,3 +9,4 @@ D:\TaskManager\TaskManager.Domain\obj\Debug\net10.0\TaskManager.Domain.dll
 D:\TaskManager\TaskManager.Domain\obj\Debug\net10.0\refint\TaskManager.Domain.dll
 D:\TaskManager\TaskManager.Domain\obj\Debug\net10.0\TaskManager.Domain.pdb
 D:\TaskManager\TaskManager.Domain\obj\Debug\net10.0\ref\TaskManager.Domain.dll
+D:\TaskManager\TaskManager.Domain\obj\Debug\net10.0\TaskManager.Domain.sourcelink.json

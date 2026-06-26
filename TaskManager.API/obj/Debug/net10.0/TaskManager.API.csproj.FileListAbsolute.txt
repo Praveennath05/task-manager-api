@@ -166,3 +166,7 @@ D:\TaskManager\TaskManager.API\obj\Debug\net10.0\refint\TaskManager.API.dll
 D:\TaskManager\TaskManager.API\obj\Debug\net10.0\TaskManager.API.pdb
 D:\TaskManager\TaskManager.API\obj\Debug\net10.0\TaskManager.API.genruntimeconfig.cache
 D:\TaskManager\TaskManager.API\obj\Debug\net10.0\ref\TaskManager.API.dll
+D:\TaskManager\TaskManager.API\obj\Debug\net10.0\TaskManager.API.sourcelink.json
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.UI.dll

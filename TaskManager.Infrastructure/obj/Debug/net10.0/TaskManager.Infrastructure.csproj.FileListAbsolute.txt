@@ -17,3 +17,4 @@ D:\TaskManager\TaskManager.Infrastructure\obj\Debug\net10.0\refint\TaskManager.I
 D:\TaskManager\TaskManager.Infrastructure\obj\Debug\net10.0\TaskManager.Infrastructure.pdb
 D:\TaskManager\TaskManager.Infrastructure\obj\Debug\net10.0\TaskManager.Infrastructure.genruntimeconfig.cache
 D:\TaskManager\TaskManager.Infrastructure\obj\Debug\net10.0\ref\TaskManager.Infrastructure.dll
+D:\TaskManager\TaskManager.Infrastructure\obj\Debug\net10.0\TaskManager.Infrastructure.sourcelink.json
