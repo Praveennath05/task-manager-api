@@ -55,10 +55,16 @@ public class TasksController : ControllerBase
         return result.IsSuccess ? Ok(result.Data) : NotFound(result.ErrorMessage);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var result = await _mediator.Send(new DeleteTaskCommand(id));
-        return result.IsSuccess ? Ok("Task deleted successfully") : NotFound(result.ErrorMessage);
-    }
+    // ── ROLE BASED ACCESS ─────────────────────────────────
+// [Authorize] on class = any logged in user
+// [Authorize(Roles = "Admin")] on method = Admin only
+// Regular users get 403 Forbidden if they try to delete
+[HttpDelete("{id}")]
+[Authorize(Roles = "Admin")]
+public async Task<IActionResult> Delete(int id)
+{
+    var result = await _mediator.Send(new DeleteTaskCommand(id));
+    return result.IsSuccess ? Ok("Task deleted successfully") : NotFound(result.ErrorMessage);
+}
+// ─────────────────────────────────────────────────────
 }
