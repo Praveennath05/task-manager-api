@@ -3,8 +3,37 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using TaskManager.Application;
 using TaskManager.Infrastructure;
+using Serilog;
+
+// ── SERILOG BOOTSTRAP LOGGER ───────────────────────────
+// This catches any errors that happen BEFORE the app fully starts
+// (e.g. config errors, DI failures during startup)
+// Without this, startup crashes would be invisible
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateBootstrapLogger();
+// 
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// ── SERILOG AS THE MAIN LOGGER ─────────────────────────
+// Replaces the default .NET logger with Serilog
+// ctx gives access to configuration and services
+// services gives access to the DI container for context enrichment
+builder.Host.UseSerilog((ctx, services, config) =>
+{
+    config
+        .ReadFrom.Configuration(ctx.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console()
+        .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day);
+});
+// ─────────────────────────────────────────────────────
+
+
 
 // ── APPLICATION SERVICES ──────────────────────────────
 builder.Services.AddApplication();

@@ -1,0 +1,18 @@
+2026-06-30 11:22:49.955 +05:30 [INF] Executed DbCommand (30ms) [Parameters=[@normalizedName='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @normalizedName
+2026-06-30 11:22:50.055 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@normalizedName='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @normalizedName
+2026-06-30 11:22:50.072 +05:30 [INF] User profile is available. Using 'C:\Users\praveennath\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-30 11:22:50.122 +05:30 [INF] Now listening on: http://localhost:5097
+2026-06-30 11:22:50.123 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-30 11:22:50.124 +05:30 [INF] Hosting environment: Development
+2026-06-30 11:22:50.125 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-06-30 11:27:25.430 +05:30 [INF] Application is shutting down...
+2026-06-30 11:27:32.141 +05:30 [INF] Now listening on: http://localhost:5097
+2026-06-30 11:27:32.172 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-30 11:27:32.173 +05:30 [INF] Hosting environment: Development
+2026-06-30 11:27:32.173 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
