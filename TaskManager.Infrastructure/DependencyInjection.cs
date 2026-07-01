@@ -21,6 +21,7 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
                 "Server=ASUS;Database=TaskManagerDb;Trusted_Connection=True;TrustServerCertificate=True"));
+                Console.WriteLine($"[DEBUG] Redis connection string: {configuration.GetConnectionString("Redis")}");
         // ─────────────────────────────────────────────────────
 
         // ── ASP.NET CORE IDENTITY ─────────────────────────────
@@ -49,10 +50,20 @@ public static class DependencyInjection
         // Same pattern for Auth:
         // when anyone asks for IAuthService, give them AuthService
         services.AddScoped<IAuthService, AuthService>();
+        
         // ── TOKEN SERVICE ─────────────────────────────────────
         // Registers TokenService so it can be injected into AuthService
         // Scoped = one instance per HTTP request
-services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();        // ─────────────────────────────────────────────────────
+        services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();        
+          
+        services.AddScoped<ICacheService, CacheService>(); 
+        
+           // and .NET will automatically give it Redis under the hood 
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+            options.InstanceName = "TaskManager_";
+        });
         return services;
     }
 }

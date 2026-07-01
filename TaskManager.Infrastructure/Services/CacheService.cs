@@ -26,21 +26,21 @@ public class CacheService : ICacheService
 
         return JsonSerializer.Deserialize<T>(data);
     }
+public async Task SetAsync<T>(string key, T value, TimeSpan expiration, CancellationToken cancellationToken)
+{
+    
 
-    public async Task SetAsync<T>(string key, T value, TimeSpan expiration, CancellationToken cancellationToken)
+    var data = JsonSerializer.Serialize(value);
+
+    var options = new DistributedCacheEntryOptions
     {
-        var data = JsonSerializer.Serialize(value);
+        AbsoluteExpirationRelativeToNow = expiration
+    };
 
-        var options = new DistributedCacheEntryOptions
-        {
-            // ── EXPIRATION ─────────────────────────────
-            // After this time, Redis automatically deletes the key
-            // Prevents stale data from living forever
-            AbsoluteExpirationRelativeToNow = expiration
-        };
+    await _cache.SetStringAsync(key, data, options, cancellationToken);
 
-        await _cache.SetStringAsync(key, data, options, cancellationToken);
-    }
+    
+}
 
     public async Task RemoveAsync(string key, CancellationToken cancellationToken)
     {

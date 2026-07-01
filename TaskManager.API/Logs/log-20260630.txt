@@ -16,3 +16,4 @@ WHERE [a].[NormalizedName] = @normalizedName
 2026-06-30 11:27:32.172 +05:30 [INF] Application started. Press Ctrl+C to shut down.
 2026-06-30 11:27:32.173 +05:30 [INF] Hosting environment: Development
 2026-06-30 11:27:32.173 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-06-30 18:59:44.161 +05:30 [INF] Application is shutting down...

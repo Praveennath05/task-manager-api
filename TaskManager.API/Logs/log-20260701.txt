@@ -1,0 +1,26 @@
+2026-07-01 16:42:24.357 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-01 16:42:24.393 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-01 16:42:24.394 +05:30 [INF] Hosting environment: Development
+2026-07-01 16:42:24.394 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-01 16:43:47.024 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-01 16:43:48.511 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-01 18:02:30.240 +05:30 [INF] Application is shutting down...
+2026-07-01 18:02:50.849 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-01 18:02:50.881 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-01 18:02:50.882 +05:30 [INF] Hosting environment: Development
+2026-07-01 18:02:50.883 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-01 18:05:33.041 +05:30 [INF] Application is shutting down...
+2026-07-01 18:05:46.996 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-01 18:05:47.032 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-01 18:05:47.033 +05:30 [INF] Hosting environment: Development
+2026-07-01 18:05:47.034 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-01 18:07:05.566 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-01 18:11:17.547 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-01 18:25:36.899 +05:30 [INF] Application is shutting down...
+2026-07-01 18:25:51.487 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-01 18:25:51.516 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-01 18:25:51.518 +05:30 [INF] Hosting environment: Development
+2026-07-01 18:25:51.519 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-01 18:26:00.555 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-01 18:26:00.596 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-01 18:34:09.780 +05:30 [INF] Application is shutting down...
