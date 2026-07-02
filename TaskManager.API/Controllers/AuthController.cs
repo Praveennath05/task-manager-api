@@ -4,27 +4,17 @@ using TaskManager.Application.Features.Auth.Commands;
 
 namespace TaskManager.API.Controllers;
 
-// ── CONTROLLER ────────────────────────────────────────
-// Entry point for all auth-related HTTP requests
-// Only talks to MediatR — never touches Identity directly
-// Clean Architecture maintained 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    // ── DEPENDENCY INJECTION ──────────────────────────
-    // MediatR is injected — routes commands to handlers
     private readonly IMediator _mediator;
 
     public AuthController(IMediator mediator)
     {
         _mediator = mediator;
     }
-    // ─────────────────────────────────────────────────
 
-    // ── REGISTER ENDPOINT ─────────────────────────────
-    // POST api/auth/register
-    // Accepts email and password — creates a new user
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterCommand command)
     {
@@ -33,17 +23,31 @@ public class AuthController : ControllerBase
             ? Ok(result.Data)
             : BadRequest(result.ErrorMessage);
     }
-    // ─────────────────────────────────────────────────
 
     // ── LOGIN ENDPOINT ────────────────────────────────
     // POST api/auth/login
-    // Accepts email and password — returns JWT token on success
+    // Now returns BOTH tokens — result.Data is an AuthResult
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
         var result = await _mediator.Send(command);
         return result.IsSuccess
-            ? Ok(new { Token = result.Data })
+            ? Ok(result.Data)  // AuthResult already has AccessToken + RefreshToken as properties
+            : Unauthorized(result.ErrorMessage);
+    }
+    // ─────────────────────────────────────────────────
+
+    // ── REFRESH ENDPOINT ──────────────────────────────
+    // POST api/auth/refresh
+    // Client sends their (still valid) refresh token here
+    // Gets back a brand new access token + refresh token
+    // No email/password needed — this is the whole point
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.IsSuccess
+            ? Ok(result.Data)
             : Unauthorized(result.ErrorMessage);
     }
     // ─────────────────────────────────────────────────

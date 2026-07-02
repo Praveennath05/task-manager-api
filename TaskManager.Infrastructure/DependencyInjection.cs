@@ -6,6 +6,7 @@ using TaskManager.Domain.Interfaces;
 using TaskManager.Infrastructure.Persistence;
 using TaskManager.Infrastructure.Repositories;
 using TaskManager.Infrastructure.Services;
+using TaskManager.Infrastructure.Repositories;
 
 namespace TaskManager.Infrastructure;
 
@@ -57,8 +58,11 @@ public static class DependencyInjection
         services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();        
           
         services.AddScoped<ICacheService, CacheService>(); 
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         
-           // and .NET will automatically give it Redis under the hood 
+           
+        
+        
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = configuration.GetConnectionString("Redis");
