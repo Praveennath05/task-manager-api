@@ -4,11 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using TaskManager.Application;
 using TaskManager.Infrastructure;
 using Serilog;
+using Hangfire;;
 
 // ── SERILOG BOOTSTRAP LOGGER ───────────────────────────
-// This catches any errors that happen BEFORE the app fully starts
-// (e.g. config errors, DI failures during startup)
-// Without this, startup crashes would be invisible
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
@@ -19,10 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // ── SERILOG AS THE MAIN LOGGER ─────────────────────────
-// Replaces the default .NET logger with Serilog
-// ctx gives access to configuration and services
-// services gives access to the DI container for context enrichment
-
 builder.Host.UseSerilog((ctx, services, config) =>
 {
     config
@@ -32,14 +26,22 @@ builder.Host.UseSerilog((ctx, services, config) =>
         .WriteTo.Console()
         .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day);
 });
-// ─────────────────────────────────────────────────────
-
-
 
 // ── APPLICATION SERVICES ──────────────────────────────
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-// ─────────────────────────────────────────────────────
+
+
+// ── HANGFIRE ────────────────────────────────────────────
+builder.Services.AddHangfire(config =>
+{
+    config.UseSqlServerStorage(
+        "Server=ASUS;Database=TaskManagerDb;Trusted_Connection=True;TrustServerCertificate=True");
+});
+
+// ── HANGFIRE SERVER ──────────────────────────────────────
+builder.Services.AddHangfireServer();
+
 
 // ── JWT AUTHENTICATION ────────────────────────────────
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -64,22 +66,18 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(secretKey))
     };
 });
-// ─────────────────────────────────────────────────────
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // ── NSWAG — OpenAPI + Swagger UI ──────────────────────
-// Generates API documentation and gives us an interactive
-// browser UI to test endpoints — replaces the broken Swashbuckle setup
 builder.Services.AddOpenApiDocument(config =>
 {
     config.Title = "TaskManager API";
     config.Version = "v1";
 
-    // ── JWT SUPPORT IN SWAGGER UI ──────────────────────
-    // Adds the "Authorize" padlock button we couldn't get working before
-    // Lets us paste "Bearer {token}" once and test all secured endpoints
+    // ── JWT SUPPORT IN SWAGGER UI ─────────────────────
     config.AddSecurity("JWT", Enumerable.Empty<string>(),
         new NSwag.OpenApiSecurityScheme
         {
@@ -92,7 +90,7 @@ builder.Services.AddOpenApiDocument(config =>
     config.OperationProcessors.Add(
         new NSwag.Generation.Processors.Security.AspNetCoreOperationSecurityScopeProcessor("JWT"));
 });
-// ─────────────────────────────────────────────────────
+
 
 
 var app = builder.Build();
@@ -102,17 +100,19 @@ app.UseMiddleware<TaskManager.API.Middleware.ExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     // ── SWAGGER UI ──────────────────────────────────
-    // /swagger — interactive browser UI to test endpoints
-    // /swagger/v1/swagger.json — raw OpenAPI spec
     app.UseOpenApi();
     app.UseSwaggerUi();
-    // ─────────────────────────────────────────────
+    
 }
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-// ─────────────────────────────────────────────────────
+// ── HANGFIRE DASHBOARD ───────────────────────────────────
+if (app.Environment.IsDevelopment())
+{
+    app.UseHangfireDashboard("/hangfire");
+}
 
 app.MapControllers();
 
@@ -121,5 +121,11 @@ using (var scope = app.Services.CreateScope())
     await TaskManager.Infrastructure.Persistence.DbSeeder
         .SeedRolesAsync(scope.ServiceProvider);
 }
+RecurringJob.AddOrUpdate<TaskManager.Domain.Interfaces.ITaskReminderJob>(
+    "overdue-task-check",
+    job => job.CheckOverdueTasksAsync(),
+    Cron.Daily
+);
+
 
 app.Run();

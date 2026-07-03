@@ -2,3 +2,38 @@
 2026-07-03 10:11:30.917 +05:30 [INF] Application started. Press Ctrl+C to shut down.
 2026-07-03 10:11:30.919 +05:30 [INF] Hosting environment: Development
 2026-07-03 10:11:30.920 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-03 10:14:51.754 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-03 10:22:24.995 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-03 10:56:54.628 +05:30 [WRN] Validation failed: Due date must be in the future
+2026-07-03 11:43:29.999 +05:30 [INF] Application is shutting down...
+2026-07-03 11:45:27.697 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-03 11:45:28.375 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-03 11:45:29.884 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-03 11:45:29.889 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-03 11:45:29.890 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-03 11:45:29.890 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-03 11:45:29.907 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-03 11:45:29.908 +05:30 [INF] Hosting environment: Development
+2026-07-03 11:45:29.908 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-03 11:45:29.979 +05:30 [INF] Server asus:12228:0ae631dc successfully announced in 72.3691 ms
+2026-07-03 11:45:29.982 +05:30 [INF] Server asus:12228:0ae631dc is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-03 11:45:29.987 +05:30 [INF] Server asus:12228:0ae631dc all the dispatchers started
+2026-07-03 11:45:41.870 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-03 12:10:58.280 +05:30 [INF] 1 servers were removed due to timeout
+2026-07-03 12:10:58.624 +05:30 [WRN] Server asus:12228:0ae631dc was considered dead by other servers, restarting...
+2026-07-03 12:10:58.625 +05:30 [INF] Server asus:12228:0ae631dc caught restart signal...
+2026-07-03 12:10:58.627 +05:30 [WRN] Server asus:12228:0ae631dc stopped non-gracefully due to ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2026-07-03 12:10:58.630 +05:30 [INF] Server asus:12228:0ae631dc successfully reported itself as stopped in 1.7376 ms
+2026-07-03 12:10:58.631 +05:30 [INF] Server asus:12228:0ae631dc has been stopped in total 4.6086 ms
+2026-07-03 12:10:58.636 +05:30 [INF] Server asus:12228:a63f3169 successfully announced in 4.2156 ms
+2026-07-03 12:10:58.638 +05:30 [INF] Server asus:12228:a63f3169 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-03 12:10:58.642 +05:30 [INF] Server asus:12228:a63f3169 all the dispatchers started
+2026-07-03 12:52:17.950 +05:30 [INF] Server asus:12228:a63f3169 caught stopping signal...
+2026-07-03 12:52:17.963 +05:30 [INF] Application is shutting down...
+2026-07-03 12:52:18.376 +05:30 [INF] Server asus:12228:a63f3169 All dispatchers stopped
+2026-07-03 12:52:18.380 +05:30 [INF] Server asus:12228:a63f3169 successfully reported itself as stopped in 3.1036 ms
+2026-07-03 12:52:18.381 +05:30 [INF] Server asus:12228:a63f3169 has been stopped in total 418.3013 ms

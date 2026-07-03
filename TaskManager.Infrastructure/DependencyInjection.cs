@@ -17,8 +17,6 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         // ── EF CORE ──────────────────────────────────────────
-        // Registers AppDbContext with SQL Server
-        // Every request gets its own DbContext instance (Scoped)
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
                 "Server=ASUS;Database=TaskManagerDb;Trusted_Connection=True;TrustServerCertificate=True"));
@@ -26,10 +24,6 @@ public static class DependencyInjection
         // ─────────────────────────────────────────────────────
 
         // ── ASP.NET CORE IDENTITY ─────────────────────────────
-        // Adds user management — register, login, password hashing
-        // IdentityUser is the default user class (email, password, roles)
-        // AddEntityFrameworkStores tells Identity to use our AppDbContext
-        // so user tables are created in our existing database
         services.AddIdentity<IdentityUser, IdentityRole>(options =>
         {
             // Password rules — relax for development, tighten for production
@@ -43,22 +37,17 @@ public static class DependencyInjection
         // ─────────────────────────────────────────────────────
 
         // ── DEPENDENCY INJECTION ──────────────────────────────
-        // Tells .NET: when anyone asks for IWorkTaskRepository,
-        // give them a WorkTaskRepository instance
-        // Scoped = one instance per HTTP request
         services.AddScoped<IWorkTaskRepository, WorkTaskRepository>();
 
         // Same pattern for Auth:
-        // when anyone asks for IAuthService, give them AuthService
         services.AddScoped<IAuthService, AuthService>();
         
         // ── TOKEN SERVICE ─────────────────────────────────────
-        // Registers TokenService so it can be injected into AuthService
-        // Scoped = one instance per HTTP request
         services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();        
           
         services.AddScoped<ICacheService, CacheService>(); 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<ITaskReminderJob, TaskReminderJob>();
         
            
         
