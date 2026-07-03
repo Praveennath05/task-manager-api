@@ -43,7 +43,6 @@ D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.IdentityModel.Logging
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
-D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.OpenApi.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.SqlServer.Server.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Mono.TextTemplating.dll
@@ -167,7 +166,6 @@ D:\TaskManager\TaskManager.API\obj\Debug\net10.0\TaskManager.API.sourcelink.json
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.UI.dll
-D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\FluentValidation.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Serilog.dll
@@ -182,3 +180,15 @@ D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Serilog.Sinks.File.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Pipelines.Sockets.Unofficial.dll
 D:\TaskManager\TaskManager.API\bin\Debug\net10.0\StackExchange.Redis.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\Namotion.Reflection.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NJsonSchema.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NJsonSchema.Annotations.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NJsonSchema.NewtonsoftJson.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NJsonSchema.Yaml.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NSwag.Annotations.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NSwag.AspNetCore.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NSwag.Core.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NSwag.Core.Yaml.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NSwag.Generation.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\NSwag.Generation.AspNetCore.dll
+D:\TaskManager\TaskManager.API\bin\Debug\net10.0\YamlDotNet.dll

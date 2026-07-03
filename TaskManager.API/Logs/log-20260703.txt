@@ -1,0 +1,4 @@
+2026-07-03 10:11:30.879 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-03 10:11:30.917 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-03 10:11:30.919 +05:30 [INF] Hosting environment: Development
+2026-07-03 10:11:30.920 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API

@@ -13,7 +13,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateBootstrapLogger();
-// 
+ 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Replaces the default .NET logger with Serilog
 // ctx gives access to configuration and services
 // services gives access to the DI container for context enrichment
+
 builder.Host.UseSerilog((ctx, services, config) =>
 {
     config
@@ -68,9 +69,31 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// ── OPENAPI — built into .NET 10 ─────────────────────
-builder.Services.AddOpenApi();
+// ── NSWAG — OpenAPI + Swagger UI ──────────────────────
+// Generates API documentation and gives us an interactive
+// browser UI to test endpoints — replaces the broken Swashbuckle setup
+builder.Services.AddOpenApiDocument(config =>
+{
+    config.Title = "TaskManager API";
+    config.Version = "v1";
+
+    // ── JWT SUPPORT IN SWAGGER UI ──────────────────────
+    // Adds the "Authorize" padlock button we couldn't get working before
+    // Lets us paste "Bearer {token}" once and test all secured endpoints
+    config.AddSecurity("JWT", Enumerable.Empty<string>(),
+        new NSwag.OpenApiSecurityScheme
+        {
+            Type = NSwag.OpenApiSecuritySchemeType.ApiKey,
+            Name = "Authorization",
+            In = NSwag.OpenApiSecurityApiKeyLocation.Header,
+            Description = "Enter: Bearer {your token}"
+        });
+
+    config.OperationProcessors.Add(
+        new NSwag.Generation.Processors.Security.AspNetCoreOperationSecurityScopeProcessor("JWT"));
+});
 // ─────────────────────────────────────────────────────
+
 
 var app = builder.Build();
 
@@ -78,7 +101,12 @@ var app = builder.Build();
 app.UseMiddleware<TaskManager.API.Middleware.ExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    // ── SWAGGER UI ──────────────────────────────────
+    // /swagger — interactive browser UI to test endpoints
+    // /swagger/v1/swagger.json — raw OpenAPI spec
+    app.UseOpenApi();
+    app.UseSwaggerUi();
+    // ─────────────────────────────────────────────
 }
 
 app.UseHttpsRedirection();
