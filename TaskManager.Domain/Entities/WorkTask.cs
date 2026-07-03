@@ -8,4 +8,6 @@ public class WorkTask : BaseEntity
     public string Description { get; set; } = string.Empty;
     public bool IsCompleted { get; set; } = false;
     public DateTime? DueDate { get; set; }
+    public bool IsOverdue{get; set;} = false;
+    
 }
