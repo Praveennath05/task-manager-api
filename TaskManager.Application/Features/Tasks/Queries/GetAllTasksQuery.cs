@@ -15,7 +15,7 @@ public class GetAllTasksQueryHandler : IRequestHandler<GetAllTasksQuery, Result<
     // ── CACHE KEY ──────────────────────────────────────
     // A constant so it's spelled the same everywhere we reference it
     // Both here (read) and in Create/Update/Delete (invalidate) later
-    private const string CacheKey = "tasks:all";
+   private const string CacheKey = CacheKeys.AllTasks;
     // ─────────────────────────────────────────────────
 
     public GetAllTasksQueryHandler(IWorkTaskRepository repository, ICacheService cache)

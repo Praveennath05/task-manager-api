@@ -11,8 +11,7 @@ public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, Resul
     private readonly IWorkTaskRepository _repository;
     private readonly ICacheService _cache;
 
-    private const string CacheKey = "tasks:all";
-
+private const string CacheKey = CacheKeys.AllTasks;
     public DeleteTaskCommandHandler(IWorkTaskRepository repository, ICacheService cache)
     {
         _repository = repository;
@@ -30,8 +29,7 @@ public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, Resul
         // ── CACHE INVALIDATION ─────────────────────────
         // Task deleted — old cached list still contains it
         await _cache.RemoveAsync(CacheKey, cancellationToken);
-        await _cache.RemoveAsync($"tasks:{request.Id}", cancellationToken);
-        // ─────────────────────────────────────────────
+await _cache.RemoveAsync(CacheKeys.TaskById(request.Id), cancellationToken);        // ─────────────────────────────────────────────
 
         return Result<bool>.Success(true);
     }

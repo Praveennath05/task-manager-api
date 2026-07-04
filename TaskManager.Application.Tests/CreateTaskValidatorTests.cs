@@ -9,7 +9,6 @@ public class CreateTaskValidatorTests
     // ── SHARED VALIDATOR INSTANCE ──────────────────────
     // Validators are stateless — safe to reuse across tests
     private readonly CreateTaskValidator _validator = new();
-    // ─────────────────────────────────────────────────
 
     [Fact]
     public void Validate_EmptyTitle_ShouldFail()
@@ -19,17 +18,14 @@ public class CreateTaskValidatorTests
             Title: "",  // invalid — empty
             Description: "Valid description",
             DueDate: DateTime.UtcNow.AddDays(1));
-        // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
         // Validate() runs synchronously, returns a ValidationResult
         var result = _validator.Validate(command);
-        // ─────────────────────────────────────────────────
 
         // ── ASSERT ─────────────────────────────────────
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors, e => e.ErrorMessage == "Title is required");
-        // ─────────────────────────────────────────────────
     }
 
     [Fact]
@@ -75,6 +71,5 @@ public class CreateTaskValidatorTests
 
         Assert.True(result.IsValid);
         Assert.Empty(result.Errors);
-        // ─────────────────────────────────────────────────
     }
 }

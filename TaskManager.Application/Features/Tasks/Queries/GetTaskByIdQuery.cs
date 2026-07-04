@@ -23,7 +23,7 @@ public class GetTaskByIdQueryHandler : IRequestHandler<GetTaskByIdQuery, Result<
         // ── UNIQUE KEY PER TASK ────────────────────────────
         // Different from "tasks:all" — this caches ONE task at a time
         // e.g. "tasks:1", "tasks:2", "tasks:3" — each task has its own slot
-        var cacheKey = $"tasks:{request.Id}";
+       var cacheKey = CacheKeys.TaskById(request.Id); 
         // ─────────────────────────────────────────────────
 
         var cached = await _cache.GetAsync<WorkTask>(cacheKey, cancellationToken);

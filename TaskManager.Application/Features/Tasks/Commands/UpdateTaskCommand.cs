@@ -18,7 +18,7 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Resul
     private readonly IWorkTaskRepository _repository;
     private readonly ICacheService _cache;
 
-    private const string CacheKey = "tasks:all";
+    private const string CacheKey = CacheKeys.AllTasks;
 
     public UpdateTaskCommandHandler(IWorkTaskRepository repository, ICacheService cache)
     {
@@ -43,8 +43,7 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Resul
         // ── CACHE INVALIDATION ─────────────────────────
         // Task changed — old cached list no longer reflects reality
         await _cache.RemoveAsync(CacheKey, cancellationToken);
-        await _cache.RemoveAsync($"tasks:{request.Id}", cancellationToken);
-        // ─────────────────────────────────────────────
+await _cache.RemoveAsync(CacheKeys.TaskById(request.Id), cancellationToken);        // ─────────────────────────────────────────────
 
         return Result<WorkTask>.Success(updated);
     }

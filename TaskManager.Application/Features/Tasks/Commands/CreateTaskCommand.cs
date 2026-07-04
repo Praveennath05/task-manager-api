@@ -17,7 +17,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, Resul
     private readonly ICacheService _cache;
 
     // Must match exactly — this is what gets deleted below
-    private const string CacheKey = "tasks:all";
+    private const string CacheKey = CacheKeys.AllTasks;
     // ─────────────────────────────────────────────────
 
     public CreateTaskCommandHandler(IWorkTaskRepository repository, ICacheService cache)
