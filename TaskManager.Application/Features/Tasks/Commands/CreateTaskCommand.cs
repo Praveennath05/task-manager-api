@@ -17,7 +17,6 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, Resul
     private readonly ICacheService _cache;
     private readonly ICurrentUserService _currentUserService;
 
-    private const string CacheKey = CacheKeys.AllTasks;
 
     public CreateTaskCommandHandler(
         IWorkTaskRepository repository,
@@ -51,8 +50,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, Resul
 
         var created = await _repository.CreateAsync(task, cancellationToken);
 
-        await _cache.RemoveAsync(CacheKey, cancellationToken);
-
+await _cache.RemoveAsync(CacheKeys.AllTasksForUser(userId), cancellationToken);
         return Result<WorkTask>.Success(created);
     }
 }

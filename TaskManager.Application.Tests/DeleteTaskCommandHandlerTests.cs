@@ -45,8 +45,8 @@ public class DeleteTaskCommandHandlerTests
             Times.Once);
 
         mockCache.Verify(
-            cache => cache.RemoveAsync("tasks:all", It.IsAny<CancellationToken>()),
-            Times.Once);
+    cache => cache.RemoveAsync("tasks:all:test-user-id-123", It.IsAny<CancellationToken>()),
+    Times.Once);
 
         mockCache.Verify(
             cache => cache.RemoveAsync("tasks:5", It.IsAny<CancellationToken>()),

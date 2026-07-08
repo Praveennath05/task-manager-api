@@ -56,10 +56,9 @@ public class CreateTaskCommandHandlerTests
             repo => repo.CreateAsync(It.IsAny<WorkTask>(), It.IsAny<CancellationToken>()),
             Times.Once);
 
-        mockCache.Verify(
-            cache => cache.RemoveAsync("tasks:all", It.IsAny<CancellationToken>()),
-            Times.Once);
-    }
+mockCache.Verify(
+    cache => cache.RemoveAsync("tasks:all:test-user-id-123", It.IsAny<CancellationToken>()),
+    Times.Once);    }
 
     // ── NEW TEST — MISSING USER ID ─────────────────────
     // Tests the defensive check we added — what if somehow

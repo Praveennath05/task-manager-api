@@ -58,9 +58,8 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Resul
 
         var updated = await _repository.UpdateAsync(existing, cancellationToken);
 
-        await _cache.RemoveAsync(CacheKey, cancellationToken);
-        await _cache.RemoveAsync(CacheKeys.TaskById(request.Id), cancellationToken);
-
+await _cache.RemoveAsync(CacheKeys.AllTasksForUser(userId), cancellationToken);
+await _cache.RemoveAsync(CacheKeys.TaskById(request.Id), cancellationToken);
         return Result<WorkTask>.Success(updated);
     }
 }
