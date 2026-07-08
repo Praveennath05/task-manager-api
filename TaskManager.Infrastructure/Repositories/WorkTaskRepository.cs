@@ -9,21 +9,22 @@ public class WorkTaskRepository : IWorkTaskRepository
 {
     private readonly AppDbContext _context;
 
-    // ── DEPENDENCY INJECTION ──────────────────────────────
-    // AppDbContext is injected by .NET automatically
     public WorkTaskRepository(AppDbContext context)
     {
         _context = context;
     }
-    // ─────────────────────────────────────────────────────
 
-    public async Task<List<WorkTask>> GetAllAsync(CancellationToken cancellationToken)
+    // ── CHANGED — FILTER BY USER IN THE QUERY ──────────────
+    // .Where(t => t.UserId == userId) runs as part of the SQL query
+    // itself — EF Core translates this to "WHERE UserId = @userId"
+    // Only that user's rows ever leave the database
+    public async Task<List<WorkTask>> GetAllAsync(string userId, CancellationToken cancellationToken)
     {
-        // ── CANCELLATION TOKEN ────────────────────────────
-        // Passed to EF Core — stops the DB query if client disconnects
-        return await _context.Tasks.ToListAsync(cancellationToken);
-        // ─────────────────────────────────────────────────
+        return await _context.Tasks
+            .Where(t => t.UserId == userId)
+            .ToListAsync(cancellationToken);
     }
+    // ─────────────────────────────────────────────────────
 
     public async Task<WorkTask?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {

@@ -20,7 +20,7 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
                 "Server=ASUS;Database=TaskManagerDb;Trusted_Connection=True;TrustServerCertificate=True"));
-                Console.WriteLine($"[DEBUG] Redis connection string: {configuration.GetConnectionString("Redis")}");
+        Console.WriteLine($"[DEBUG] Redis connection string: {configuration.GetConnectionString("Redis")}");
         // ─────────────────────────────────────────────────────
 
         // ── ASP.NET CORE IDENTITY ─────────────────────────────
@@ -41,18 +41,20 @@ public static class DependencyInjection
 
         // Same pattern for Auth:
         services.AddScoped<IAuthService, AuthService>();
-        
+
         // ── TOKEN SERVICE ─────────────────────────────────────
-        services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();        
-          
-        services.AddScoped<ICacheService, CacheService>(); 
+        services.AddScoped<TaskManager.Infrastructure.Services.TokenService>();
+
+        services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<ITaskReminderJob, TaskReminderJob>();
-        services.AddScoped<IEmailService,EmailService>();
-        
-           
-        
-        
+        services.AddScoped<IEmailService, EmailService>();
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+
+
+
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = configuration.GetConnectionString("Redis");
