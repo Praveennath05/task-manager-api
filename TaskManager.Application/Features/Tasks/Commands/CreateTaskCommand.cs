@@ -15,34 +15,43 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, Resul
 {
     private readonly IWorkTaskRepository _repository;
     private readonly ICacheService _cache;
+    private readonly ICurrentUserService _currentUserService;
 
-    // Must match exactly — this is what gets deleted below
     private const string CacheKey = CacheKeys.AllTasks;
-    // ─────────────────────────────────────────────────
 
-    public CreateTaskCommandHandler(IWorkTaskRepository repository, ICacheService cache)
+    public CreateTaskCommandHandler(
+        IWorkTaskRepository repository,
+        ICacheService cache,
+        ICurrentUserService currentUserService)
     {
         _repository = repository;
         _cache = cache;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Result<WorkTask>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
     {
+        // ── OWNERSHIP ────────────────────────────────────
+        // Stamp the task with whoever is currently logged in
+        // If somehow null (shouldn't happen since [Authorize]
+        // already blocks unauthenticated requests), fail clearly
+        // rather than silently creating an orphaned task
+        var userId = _currentUserService.UserId;
+        if (string.IsNullOrEmpty(userId))
+            return Result<WorkTask>.Failure("Unable to determine current user");
+        // ─────────────────────────────────────────────────
+
         var task = new WorkTask
         {
             Title = request.Title,
             Description = request.Description,
-            DueDate = request.DueDate
+            DueDate = request.DueDate,
+            UserId = userId
         };
 
         var created = await _repository.CreateAsync(task, cancellationToken);
 
-        // A new task was added — the old cached list is now stale
-        // Delete it so the NEXT GetAllTasksQuery fetches fresh data
-        // We don't update the cache here — simpler and safer
-        // to just remove it and let the next read rebuild it
         await _cache.RemoveAsync(CacheKey, cancellationToken);
-        // ─────────────────────────────────────────────
 
         return Result<WorkTask>.Success(created);
     }

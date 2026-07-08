@@ -9,5 +9,5 @@ public class WorkTask : BaseEntity
     public bool IsCompleted { get; set; } = false;
     public DateTime? DueDate { get; set; }
     public bool IsOverdue{get; set;} = false;
-    
+    public string UserId {get;set;} = string.Empty;    
 }

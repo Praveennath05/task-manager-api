@@ -48,6 +48,7 @@ public static class DependencyInjection
         services.AddScoped<ICacheService, CacheService>(); 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<ITaskReminderJob, TaskReminderJob>();
+        services.AddScoped<IEmailService,EmailService>();
         
            
         
