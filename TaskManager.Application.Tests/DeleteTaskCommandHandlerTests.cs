@@ -8,22 +8,26 @@ namespace TaskManager.Application.Tests;
 
 public class DeleteTaskCommandHandlerTests
 {
-    // ── TEST 1 — TASK EXISTS ────────────────────────────
+    private const string CurrentUserId = "test-user-id-123";
+    private const string OtherUserId = "other-user-id-456";
+
     [Fact]
     public async Task Handle_ExistingTask_ShouldDeleteAndReturnSuccess()
     {
         // ── ARRANGE ────────────────────────────────────
         var mockRepository = new Mock<IWorkTaskRepository>();
         var mockCache = new Mock<ICacheService>();
+        var mockCurrentUser = new Mock<ICurrentUserService>();
 
-        var existingTask = new WorkTask { Id = 5, Title = "Task To Delete" };
+        mockCurrentUser.Setup(cu => cu.UserId).Returns(CurrentUserId);
 
-        // Simulate: repository finds the task when asked
+        var existingTask = new WorkTask { Id = 5, Title = "Task To Delete", UserId = CurrentUserId };
+
         mockRepository
             .Setup(repo => repo.GetByIdAsync(5, It.IsAny<CancellationToken>()))
             .ReturnsAsync(existingTask);
 
-        var handler = new DeleteTaskCommandHandler(mockRepository.Object, mockCache.Object);
+        var handler = new DeleteTaskCommandHandler(mockRepository.Object, mockCache.Object, mockCurrentUser.Object);
         var command = new DeleteTaskCommand(5);
         // ─────────────────────────────────────────────────
 
@@ -36,15 +40,10 @@ public class DeleteTaskCommandHandlerTests
         Assert.True(result.Data);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — ACTUAL DELETE WAS CALLED ───────────
         mockRepository.Verify(
             repo => repo.DeleteAsync(5, It.IsAny<CancellationToken>()),
             Times.Once);
-        // ─────────────────────────────────────────────────
 
-        // ── VERIFY — BOTH CACHE KEYS INVALIDATED ────────
-        // We fixed this earlier — delete must clear BOTH
-        // "tasks:all" AND "tasks:5" specifically
         mockCache.Verify(
             cache => cache.RemoveAsync("tasks:all", It.IsAny<CancellationToken>()),
             Times.Once);
@@ -52,24 +51,23 @@ public class DeleteTaskCommandHandlerTests
         mockCache.Verify(
             cache => cache.RemoveAsync("tasks:5", It.IsAny<CancellationToken>()),
             Times.Once);
-        // ─────────────────────────────────────────────────
     }
 
-    // ── TEST 2 — TASK DOES NOT EXIST ────────────────────
-    // This is the branch we haven't tested anywhere yet
     [Fact]
     public async Task Handle_NonExistentTask_ShouldReturnFailure_AndNeverCallDelete()
     {
         // ── ARRANGE ────────────────────────────────────
         var mockRepository = new Mock<IWorkTaskRepository>();
         var mockCache = new Mock<ICacheService>();
+        var mockCurrentUser = new Mock<ICurrentUserService>();
 
-        // Simulate: repository finds NOTHING — task doesn't exist
+        mockCurrentUser.Setup(cu => cu.UserId).Returns(CurrentUserId);
+
         mockRepository
             .Setup(repo => repo.GetByIdAsync(999, It.IsAny<CancellationToken>()))
             .ReturnsAsync((WorkTask?)null);
 
-        var handler = new DeleteTaskCommandHandler(mockRepository.Object, mockCache.Object);
+        var handler = new DeleteTaskCommandHandler(mockRepository.Object, mockCache.Object, mockCurrentUser.Object);
         var command = new DeleteTaskCommand(999);
         // ─────────────────────────────────────────────────
 
@@ -82,19 +80,53 @@ public class DeleteTaskCommandHandlerTests
         Assert.Equal("Task not found", result.ErrorMessage);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — CRITICAL SAFETY CHECK ──────────────
-        // If the task doesn't exist, DeleteAsync must NEVER be called
-        // This proves the handler correctly checks existence BEFORE
-        // attempting to delete — no wasted database calls, no silent
-        // failures pretending something was deleted when it wasn't
         mockRepository.Verify(
             repo => repo.DeleteAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
             Times.Never);
+
+        mockCache.Verify(
+            cache => cache.RemoveAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    // ── NEW TEST — OWNERSHIP ────────────────────────────
+    [Fact]
+    public async Task Handle_TaskBelongsToAnotherUser_ShouldReturnNotFound_AndNeverDelete()
+    {
+        // ── ARRANGE ────────────────────────────────────
+        var mockRepository = new Mock<IWorkTaskRepository>();
+        var mockCache = new Mock<ICacheService>();
+        var mockCurrentUser = new Mock<ICurrentUserService>();
+
+        mockCurrentUser.Setup(cu => cu.UserId).Returns(CurrentUserId);
+
+        var someoneElsesTask = new WorkTask { Id = 5, Title = "Not Yours", UserId = OtherUserId };
+
+        mockRepository
+            .Setup(repo => repo.GetByIdAsync(5, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(someoneElsesTask);
+
+        var handler = new DeleteTaskCommandHandler(mockRepository.Object, mockCache.Object, mockCurrentUser.Object);
+        var command = new DeleteTaskCommand(5);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — CACHE SHOULD NOT BE TOUCHED ────────
-        // Nothing changed in the database, so nothing should
-        // be invalidated in the cache either
+        // ── ACT ────────────────────────────────────────
+        var result = await handler.Handle(command, CancellationToken.None);
+        // ─────────────────────────────────────────────────
+
+        // ── ASSERT ─────────────────────────────────────
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Task not found", result.ErrorMessage);
+        // ─────────────────────────────────────────────────
+
+        // ── VERIFY — TASK WAS NEVER ACTUALLY DELETED ────
+        // The most important assertion in this whole file:
+        // even though the task was found, a different user's
+        // task must NEVER actually be deleted
+        mockRepository.Verify(
+            repo => repo.DeleteAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+
         mockCache.Verify(
             cache => cache.RemoveAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
             Times.Never);
