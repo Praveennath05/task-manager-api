@@ -4,7 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using TaskManager.Application;
 using TaskManager.Infrastructure;
 using Serilog;
-using Hangfire;;
+using Hangfire;
+using Microsoft.Extensions.Options;
+;
 
 // ── SERILOG BOOTSTRAP LOGGER ───────────────────────────
 Log.Logger = new LoggerConfiguration()
@@ -65,7 +67,17 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(secretKey))
     };
+})
+.AddCookie("External") // temporary holding scheme for the Google login result
+.AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    options.CallbackPath = "/signin-google";
+    options.SignInScheme = "External";
 });
+builder.Services.AddAuthentication()
+.AddCookie("External");
 
 
 builder.Services.AddControllers();

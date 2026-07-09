@@ -39,3 +39,56 @@
 2026-07-09 10:28:25.821 +05:30 [INF] Server asus:29200:9a752ca9 All dispatchers stopped
 2026-07-09 10:28:25.828 +05:30 [INF] Server asus:29200:9a752ca9 successfully reported itself as stopped in 4.2171 ms
 2026-07-09 10:28:25.829 +05:30 [INF] Server asus:29200:9a752ca9 has been stopped in total 67.5897 ms
+2026-07-09 10:28:46.671 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-09 10:28:47.167 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-09 10:28:48.402 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-09 10:28:48.408 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-09 10:28:48.409 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-09 10:28:48.409 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-09 10:28:48.420 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-09 10:28:48.421 +05:30 [INF] Hosting environment: Development
+2026-07-09 10:28:48.421 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-09 10:28:48.434 +05:30 [INF] Server asus:29800:a20e2ae6 successfully announced in 13.8201 ms
+2026-07-09 10:28:48.438 +05:30 [INF] Server asus:29800:a20e2ae6 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-09 10:28:48.443 +05:30 [INF] Server asus:29800:a20e2ae6 all the dispatchers started
+2026-07-09 10:28:53.612 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-09 10:32:44.149 +05:30 [INF] Starting overdue task check at "2026-07-09T05:02:44.1489140Z"
+2026-07-09 10:32:44.261 +05:30 [INF] No new overdue tasks found
+2026-07-09 10:32:44.269 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-09 10:35:21.823 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-09 10:37:50.803 +05:30 [INF] Starting overdue task check at "2026-07-09T05:07:50.8029886Z"
+2026-07-09 10:37:50.809 +05:30 [WRN] Task marked overdue: Id=1007, Title=Email Test Task 3, DueDate="2026-07-09T05:07:00.0000000"
+2026-07-09 10:37:52.280 +05:30 [INF] Email sent successfully to test@gmail.com
+2026-07-09 10:37:52.283 +05:30 [INF] Overdue check complete. Flagged: 1, Un-flagged: 0
+2026-07-09 10:44:49.904 +05:30 [WRN] Validation failed: Due date must be in the future
+2026-07-09 10:45:03.937 +05:30 [WRN] Validation failed: Due date must be in the future
+2026-07-09 10:47:10.273 +05:30 [INF] Starting overdue task check at "2026-07-09T05:17:10.2737584Z"
+2026-07-09 10:47:10.278 +05:30 [WRN] Task marked overdue: Id=1008, Title=Email Test Task 3, DueDate="2026-07-09T05:16:00.0000000"
+2026-07-09 10:47:11.981 +05:30 [INF] Email sent successfully to praveennath052004@gmail.com
+2026-07-09 10:47:11.984 +05:30 [INF] Overdue check complete. Flagged: 1, Un-flagged: 0
+2026-07-09 17:37:27.233 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-09 17:37:27.825 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-09 17:37:29.673 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-09 17:37:29.679 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-09 17:37:29.680 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-09 17:37:29.681 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-09 17:37:29.693 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-09 17:37:29.694 +05:30 [INF] Hosting environment: Development
+2026-07-09 17:37:29.695 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-09 17:37:29.708 +05:30 [INF] Server asus:27860:939ebfa6 successfully announced in 14.7829 ms
+2026-07-09 17:37:29.712 +05:30 [INF] Server asus:27860:939ebfa6 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-09 17:37:29.718 +05:30 [INF] Server asus:27860:939ebfa6 all the dispatchers started
+2026-07-09 17:37:29.720 +05:30 [INF] 1 servers were removed due to timeout
+2026-07-09 18:30:08.875 +05:30 [INF] Server asus:27860:939ebfa6 caught stopping signal...
+2026-07-09 18:30:08.894 +05:30 [INF] Application is shutting down...
+2026-07-09 18:30:08.947 +05:30 [INF] Server asus:27860:939ebfa6 All dispatchers stopped
+2026-07-09 18:30:08.957 +05:30 [INF] Server asus:27860:939ebfa6 successfully reported itself as stopped in 4.899 ms
+2026-07-09 18:30:08.958 +05:30 [INF] Server asus:27860:939ebfa6 has been stopped in total 64.8806 ms

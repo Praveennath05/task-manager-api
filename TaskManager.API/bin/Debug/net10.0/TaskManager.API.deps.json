@@ -10,6 +10,7 @@
         "dependencies": {
           "Hangfire.AspNetCore": "1.8.23",
           "Hangfire.SqlServer": "1.8.23",
+          "Microsoft.AspNetCore.Authentication.Google": "10.0.9",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.9",
           "Microsoft.EntityFrameworkCore.Design": "10.0.9",
           "NSwag.AspNetCore": "14.7.1",
@@ -181,6 +182,14 @@
           "lib/netstandard2.0/MediatR.Contracts.dll": {
             "assemblyVersion": "2.0.1.0",
             "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/10.0.9": {
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "10.0.9.0",
+            "fileVersion": "10.0.926.27113"
           }
         }
       },
@@ -1334,6 +1343,13 @@
       "sha512": "sha512-FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ==",
       "path": "mediatr.contracts/2.0.1",
       "hashPath": "mediatr.contracts.2.0.1.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.Google/10.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xqjTc8/ap0dwKmdaqSlV8RxjXb02uQ8rynDtTuHRU2gmOYaNm6O+uUjobp4Ararzq0ndKNXiWnQErxjWEGFGiA==",
+      "path": "microsoft.aspnetcore.authentication.google/10.0.9",
+      "hashPath": "microsoft.aspnetcore.authentication.google.10.0.9.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/10.0.9": {
       "type": "package",
