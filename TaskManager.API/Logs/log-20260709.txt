@@ -1,0 +1,41 @@
+2026-07-09 10:09:47.341 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-09 10:09:47.971 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-09 10:09:50.537 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-09 10:09:50.544 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-09 10:09:50.546 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-09 10:09:50.546 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-09 10:09:50.558 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-09 10:09:50.559 +05:30 [INF] Hosting environment: Development
+2026-07-09 10:09:50.560 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-09 10:09:50.578 +05:30 [INF] Server asus:29200:9a752ca9 successfully announced in 20.4154 ms
+2026-07-09 10:09:50.582 +05:30 [INF] Server asus:29200:9a752ca9 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-09 10:09:50.587 +05:30 [INF] Server asus:29200:9a752ca9 all the dispatchers started
+2026-07-09 10:09:50.589 +05:30 [INF] 1 servers were removed due to timeout
+2026-07-09 10:09:51.150 +05:30 [INF] Starting overdue task check at "2026-07-09T04:39:51.1498965Z"
+2026-07-09 10:09:51.259 +05:30 [INF] No new overdue tasks found
+2026-07-09 10:09:51.267 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-09 10:10:16.666 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-09 10:14:54.229 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-09 10:18:29.845 +05:30 [INF] Starting overdue task check at "2026-07-09T04:48:29.8457556Z"
+2026-07-09 10:18:29.849 +05:30 [INF] No new overdue tasks found
+2026-07-09 10:18:29.853 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-09 10:22:59.667 +05:30 [INF] Starting overdue task check at "2026-07-09T04:52:59.6676399Z"
+2026-07-09 10:22:59.675 +05:30 [WRN] Task marked overdue: Id=1005, Title=Email Test Task 2, DueDate="2026-07-09T04:50:00.0000000"
+2026-07-09 10:23:01.104 +05:30 [ERR] Failed to send email to test@gmail.com. Status: "Forbidden", Body: {"errors":[{"message":"The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements","field":"from","help":null}]}
+2026-07-09 10:23:01.112 +05:30 [INF] Overdue check complete. Flagged: 1, Un-flagged: 0
+2026-07-09 10:23:43.467 +05:30 [INF] Starting overdue task check at "2026-07-09T04:53:43.4671627Z"
+2026-07-09 10:23:43.471 +05:30 [INF] No new overdue tasks found
+2026-07-09 10:23:43.473 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-09 10:27:30.826 +05:30 [INF] Starting overdue task check at "2026-07-09T04:57:30.8268560Z"
+2026-07-09 10:27:30.845 +05:30 [WRN] Task marked overdue: Id=1006, Title=Email Test Task 2, DueDate="2026-07-09T04:57:00.0000000"
+2026-07-09 10:27:31.833 +05:30 [ERR] Failed to send email to test@gmail.com. Status: "Forbidden", Body: {"errors":[{"message":"The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved. Visit https://sendgrid.com/docs/for-developers/sending-email/sender-identity/ to see the Sender Identity requirements","field":"from","help":null}]}
+2026-07-09 10:27:31.836 +05:30 [INF] Overdue check complete. Flagged: 1, Un-flagged: 0
+2026-07-09 10:28:25.759 +05:30 [INF] Server asus:29200:9a752ca9 caught stopping signal...
+2026-07-09 10:28:25.762 +05:30 [INF] Application is shutting down...
+2026-07-09 10:28:25.821 +05:30 [INF] Server asus:29200:9a752ca9 All dispatchers stopped
+2026-07-09 10:28:25.828 +05:30 [INF] Server asus:29200:9a752ca9 successfully reported itself as stopped in 4.2171 ms
+2026-07-09 10:28:25.829 +05:30 [INF] Server asus:29200:9a752ca9 has been stopped in total 67.5897 ms

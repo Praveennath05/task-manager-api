@@ -41,7 +41,7 @@ public class EmailService : IEmailService
         // SendGrid account (Settings → Sender Authentication) or
         // SendGrid will reject the send. Use the email you signed
         // up with, or verify a new one — we'll do this next step
-        var from = new EmailAddress("your-verified-email@gmail.com", "Task Manager");
+        var from = new EmailAddress("praveennath052004@gmail.com", "Task Manager");
         // ─────────────────────────────────────────────────
 
         var to = new EmailAddress(toEmail);
