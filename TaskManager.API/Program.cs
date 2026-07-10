@@ -5,8 +5,7 @@ using TaskManager.Application;
 using TaskManager.Infrastructure;
 using Serilog;
 using Hangfire;
-using Microsoft.Extensions.Options;
-;
+
 
 // ── SERILOG BOOTSTRAP LOGGER ───────────────────────────
 Log.Logger = new LoggerConfiguration()
@@ -76,8 +75,6 @@ builder.Services.AddAuthentication(options =>
     options.CallbackPath = "/signin-google";
     options.SignInScheme = "External";
 });
-builder.Services.AddAuthentication()
-.AddCookie("External");
 
 
 builder.Services.AddControllers();

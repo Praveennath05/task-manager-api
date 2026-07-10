@@ -207,9 +207,6 @@ D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\icudt_CJK.tj
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\Microsoft.DotNet.HotReload.WebAssembly.Browser.r0uvx0ebhi.wasm
-D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.946voqz6a8.wasm
-D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.h0nn03uk12.pdb
-D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\dotnet.bs2ud9mgn4.js
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\blazor.webassembly.958z1vx7fr.js.gz
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.wp5b4xwrtz.wasm.gz
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\Microsoft.AspNetCore.Components.4payhwuyuh.wasm.gz
@@ -418,9 +415,6 @@ D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\icudt_CJK.tj
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat.gz
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat.gz
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\Microsoft.DotNet.HotReload.WebAssembly.Browser.r0uvx0ebhi.wasm.gz
-D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.946voqz6a8.wasm.gz
-D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.h0nn03uk12.pdb.gz
-D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\dotnet.bs2ud9mgn4.js.gz
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\TaskManager.Web.staticwebassets.runtime.json
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\TaskManager.Web.staticwebassets.endpoints.json
 D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\TaskManager.Web.dll
@@ -1112,10 +1106,6 @@ D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\5mtohjzsgr-{0}-tjcz0
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\t9t3kfny95-{0}-tptq2av103-tptq2av103.gz
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\b71k3kzt3s-{0}-lfu7j35m59-lfu7j35m59.gz
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\2gi6ifaf42-{0}-r0uvx0ebhi-r0uvx0ebhi.gz
-D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\gqcnrfcqmg-{0}-946voqz6a8-946voqz6a8.gz
-D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\e0e9qcg91j-{0}-h0nn03uk12-h0nn03uk12.gz
-D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\vojnnkyycc-{0}-bs2ud9mgn4-bs2ud9mgn4.gz
-D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\d71p3gi9ww-{0}-4tkte03fa1-4tkte03fa1.gz
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\staticwebassets.build.json
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\staticwebassets.build.json.cache
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\staticwebassets.development.json
@@ -1126,3 +1116,13 @@ D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\TaskManager.Web.dll
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\refint\TaskManager.Web.dll
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\TaskManager.Web.pdb
 D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\ref\TaskManager.Web.dll
+D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.vr7qgkmzoe.wasm
+D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.u2h7kf079w.pdb
+D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\dotnet.swrhnhzjvb.js
+D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.vr7qgkmzoe.wasm.gz
+D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\TaskManager.Web.u2h7kf079w.pdb.gz
+D:\TaskManager\TaskManager.Web\bin\Debug\net10.0\wwwroot\_framework\dotnet.swrhnhzjvb.js.gz
+D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\gqcnrfcqmg-{0}-vr7qgkmzoe-vr7qgkmzoe.gz
+D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\e0e9qcg91j-{0}-u2h7kf079w-u2h7kf079w.gz
+D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\vojnnkyycc-{0}-swrhnhzjvb-swrhnhzjvb.gz
+D:\TaskManager\TaskManager.Web\obj\Debug\net10.0\compressed\d71p3gi9ww-{0}-euuavyt7gy-euuavyt7gy.gz
