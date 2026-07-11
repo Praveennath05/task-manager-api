@@ -11,13 +11,6 @@ namespace TaskManager.Application.Tests;
 
 public class AuthServiceTests
 {
-    // ── HELPER METHOD ──────────────────────────────────────
-    // UserManager<IdentityUser> has a complex constructor —
-    // it needs a IUserStore<IdentityUser> plus several optional
-    // services. Moq can create a "fake" UserManager by mocking
-    // just the IUserStore and passing nulls for the rest (Identity
-    // tolerates nulls for options/validators/etc in this pattern —
-    // this is the standard, well-documented way to test Identity code)
     private static Mock<UserManager<IdentityUser>> CreateMockUserManager()
     {
         var store = new Mock<IUserStore<IdentityUser>>();
@@ -25,10 +18,6 @@ public class AuthServiceTests
             store.Object, null!, null!, null!, null!, null!, null!, null!, null!);
     }
 
-    // ── HELPER METHOD ──────────────────────────────────────
-    // SignInManager<IdentityUser> similarly needs several
-    // constructor arguments — UserManager, HttpContextAccessor,
-    // ClaimsPrincipalFactory, Options, Logger, Schemes, Confirmation
     private static Mock<SignInManager<IdentityUser>> CreateMockSignInManager(
         Mock<UserManager<IdentityUser>> mockUserManager)
     {
@@ -42,9 +31,6 @@ public class AuthServiceTests
             null!, null!, null!, null!);
     }
 
-    // ── HELPER METHOD ──────────────────────────────────────
-    // Extracted since every test needs a working TokenService —
-    // avoids repeating this configuration setup in every single test
     private static TokenService CreateTestTokenService()
     {
         var configuration = new ConfigurationBuilder()
@@ -60,6 +46,15 @@ public class AuthServiceTests
         return new TokenService(configuration);
     }
 
+    private static Mock<IEmailService> CreateMockEmailService()
+    {
+        var mock = new Mock<IEmailService>();
+        mock.Setup(e => e.SendEmailAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        return mock;
+    }
+
     [Fact]
     public async Task RegisterAsync_NewEmail_ShouldCreateUserAndReturnSuccess()
     {
@@ -67,27 +62,13 @@ public class AuthServiceTests
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
-        var mockLogger = new Mock<ILogger<TokenService>>();
+        var mockEmailService = CreateMockEmailService();
+        var tokenService = CreateTestTokenService();
 
-        // Fake config just enough for TokenService to not crash
-        var configValues = new Dictionary<string, string?>
-        {
-            { "JwtSettings:SecretKey", "ThisIsAVerySecretKeyForTestingOnly12345678" },
-            { "JwtSettings:Issuer", "TestIssuer" },
-            { "JwtSettings:Audience", "TestAudience" },
-            { "JwtSettings:ExpiryMinutes", "60" }
-        };
-        var configuration = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
-            .AddInMemoryCollection(configValues)
-            .Build();
-        var tokenService = new TokenService(configuration);
-
-        // Simulate: no existing user with this email
         mockUserManager
             .Setup(um => um.FindByEmailAsync("new@gmail.com"))
             .ReturnsAsync((IdentityUser?)null);
 
-        // Simulate: user creation succeeds
         mockUserManager
             .Setup(um => um.CreateAsync(It.IsAny<IdentityUser>(), "Password123"))
             .ReturnsAsync(IdentityResult.Success);
@@ -96,11 +77,19 @@ public class AuthServiceTests
             .Setup(um => um.AddToRoleAsync(It.IsAny<IdentityUser>(), "User"))
             .ReturnsAsync(IdentityResult.Success);
 
+        // ── NEW — CONFIRMATION TOKEN GENERATION ──────────
+        // RegisterAsync now calls this — must be mocked or it throws
+        mockUserManager
+            .Setup(um => um.GenerateEmailConfirmationTokenAsync(It.IsAny<IdentityUser>()))
+            .ReturnsAsync("fake-confirmation-token");
+        // ─────────────────────────────────────────────────
+
         var authService = new AuthService(
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -109,7 +98,7 @@ public class AuthServiceTests
 
         // ── ASSERT ─────────────────────────────────────
         Assert.True(result.IsSuccess);
-        Assert.Equal("Registration successful", result.Data);
+        Assert.Contains("check your email", result.Data);
         // ─────────────────────────────────────────────────
 
         mockUserManager.Verify(
@@ -119,6 +108,12 @@ public class AuthServiceTests
         mockUserManager.Verify(
             um => um.AddToRoleAsync(It.IsAny<IdentityUser>(), "User"),
             Times.Once);
+
+        // ── VERIFY — CONFIRMATION EMAIL WAS ACTUALLY SENT ──
+        mockEmailService.Verify(
+            e => e.SendEmailAsync("new@gmail.com", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Once);
+        // ─────────────────────────────────────────────────
     }
 
     [Fact]
@@ -128,21 +123,11 @@ public class AuthServiceTests
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
-
-        var configuration = new Microsoft.Extensions.Configuration.ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                { "JwtSettings:SecretKey", "ThisIsAVerySecretKeyForTestingOnly12345678" },
-                { "JwtSettings:Issuer", "TestIssuer" },
-                { "JwtSettings:Audience", "TestAudience" },
-                { "JwtSettings:ExpiryMinutes", "60" }
-            })
-            .Build();
-        var tokenService = new TokenService(configuration);
+        var mockEmailService = CreateMockEmailService();
+        var tokenService = CreateTestTokenService();
 
         var existingUser = new IdentityUser { Email = "existing@gmail.com" };
 
-        // Simulate: email ALREADY exists
         mockUserManager
             .Setup(um => um.FindByEmailAsync("existing@gmail.com"))
             .ReturnsAsync(existingUser);
@@ -151,7 +136,8 @@ public class AuthServiceTests
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -163,12 +149,12 @@ public class AuthServiceTests
         Assert.Equal("Email already registered", result.ErrorMessage);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — NEVER ATTEMPTED TO CREATE A DUPLICATE ──
         mockUserManager.Verify(
             um => um.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()),
             Times.Never);
     }
-// ══════════════════════════════════════════════════════
+
+    // ══════════════════════════════════════════════════════
     // LoginAsync TESTS
     // ══════════════════════════════════════════════════════
 
@@ -179,21 +165,21 @@ public class AuthServiceTests
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
         var tokenService = CreateTestTokenService();
 
-        var existingUser = new IdentityUser { Id = "user-123", Email = "test@gmail.com" };
+        // ── EmailConfirmed = true ────────────────────────
+        // Required now — LoginAsync blocks unconfirmed accounts
+        var existingUser = new IdentityUser { Id = "user-123", Email = "test@gmail.com", EmailConfirmed = true };
+        // ─────────────────────────────────────────────────
 
         mockUserManager
             .Setup(um => um.FindByEmailAsync("test@gmail.com"))
             .ReturnsAsync(existingUser);
 
-        // ── SIGNINMANAGER MOCK ──────────────────────────
-        // CheckPasswordSignInAsync verifies the password —
-        // simulate it succeeding
         mockSignInManager
             .Setup(sm => sm.CheckPasswordSignInAsync(existingUser, "CorrectPassword", true))
             .ReturnsAsync(SignInResult.Success);
-        // ─────────────────────────────────────────────────
 
         mockUserManager
             .Setup(um => um.GetRolesAsync(existingUser))
@@ -203,7 +189,8 @@ public class AuthServiceTests
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -217,14 +204,9 @@ public class AuthServiceTests
         Assert.NotEmpty(result.Data.RefreshToken);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — REFRESH TOKEN WAS ACTUALLY SAVED ───
-        // Proves LoginAsync doesn't just generate a random string —
-        // it persists the refresh token via the repository, exactly
-        // like the real flow we manually tested with curl earlier
         mockRefreshTokenRepo.Verify(
             repo => repo.CreateAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()),
             Times.Once);
-        // ─────────────────────────────────────────────────
     }
 
     [Fact]
@@ -234,25 +216,25 @@ public class AuthServiceTests
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
         var tokenService = CreateTestTokenService();
 
-        var existingUser = new IdentityUser { Id = "user-123", Email = "test@gmail.com" };
+        var existingUser = new IdentityUser { Id = "user-123", Email = "test@gmail.com", EmailConfirmed = true };
 
         mockUserManager
             .Setup(um => um.FindByEmailAsync("test@gmail.com"))
             .ReturnsAsync(existingUser);
 
-        // ── SIMULATE WRONG PASSWORD ──────────────────────
         mockSignInManager
             .Setup(sm => sm.CheckPasswordSignInAsync(existingUser, "WrongPassword", true))
             .ReturnsAsync(SignInResult.Failed);
-        // ─────────────────────────────────────────────────
 
         var authService = new AuthService(
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -264,11 +246,54 @@ public class AuthServiceTests
         Assert.Equal("Invalid email or password", result.ErrorMessage);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — NO TOKEN WAS EVER CREATED ──────────
-        // Critical security check: a failed login must NEVER
-        // result in a refresh token being generated and saved
         mockRefreshTokenRepo.Verify(
             repo => repo.CreateAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    // ── NEW TEST — EMAIL NOT CONFIRMED ──────────────────
+    // Correct password, but the account was never confirmed —
+    // login must still be blocked
+    [Fact]
+    public async Task LoginAsync_UnconfirmedEmail_ShouldReturnFailure_AndNeverCheckPassword()
+    {
+        // ── ARRANGE ────────────────────────────────────
+        var mockUserManager = CreateMockUserManager();
+        var mockSignInManager = CreateMockSignInManager(mockUserManager);
+        var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
+        var tokenService = CreateTestTokenService();
+
+        // ── EmailConfirmed = false ────────────────────────
+        var unconfirmedUser = new IdentityUser { Id = "user-456", Email = "unconfirmed@gmail.com", EmailConfirmed = false };
+        // ─────────────────────────────────────────────────
+
+        mockUserManager
+            .Setup(um => um.FindByEmailAsync("unconfirmed@gmail.com"))
+            .ReturnsAsync(unconfirmedUser);
+
+        var authService = new AuthService(
+            mockUserManager.Object,
+            mockSignInManager.Object,
+            tokenService,
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
+        // ─────────────────────────────────────────────────
+
+        // ── ACT ────────────────────────────────────────
+        var result = await authService.LoginAsync("unconfirmed@gmail.com", "AnyPassword", CancellationToken.None);
+        // ─────────────────────────────────────────────────
+
+        // ── ASSERT ─────────────────────────────────────
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Please confirm your email before logging in", result.ErrorMessage);
+        // ─────────────────────────────────────────────────
+
+        // ── VERIFY — PASSWORD WAS NEVER EVEN CHECKED ────
+        // Fail fast on the confirmation check before wasting
+        // a password verification attempt
+        mockSignInManager.Verify(
+            sm => sm.CheckPasswordSignInAsync(It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<bool>()),
             Times.Never);
         // ─────────────────────────────────────────────────
     }
@@ -284,20 +309,19 @@ public class AuthServiceTests
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
         var tokenService = CreateTestTokenService();
 
-        var existingUser = new IdentityUser { Id = "user-123", Email = "test@gmail.com" };
+        var existingUser = new IdentityUser { Id = "user-123", Email = "test@gmail.com", EmailConfirmed = true };
 
-        // ── SIMULATE A VALID, ACTIVE REFRESH TOKEN ──────
         var oldRefreshToken = new RefreshToken
         {
             Id = 1,
             Token = "old-refresh-token-value",
             UserId = "user-123",
-            ExpiresAt = DateTime.UtcNow.AddDays(5), // still valid
+            ExpiresAt = DateTime.UtcNow.AddDays(5),
             IsRevoked = false
         };
-        // ─────────────────────────────────────────────────
 
         mockRefreshTokenRepo
             .Setup(repo => repo.GetByTokenAsync("old-refresh-token-value", It.IsAny<CancellationToken>()))
@@ -315,7 +339,8 @@ public class AuthServiceTests
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -327,35 +352,26 @@ public class AuthServiceTests
         Assert.NotNull(result.Data);
         Assert.NotEmpty(result.Data.AccessToken);
         Assert.NotEmpty(result.Data.RefreshToken);
-
-        // ── PROVE ROTATION — NEW TOKEN IS DIFFERENT ─────
         Assert.NotEqual("old-refresh-token-value", result.Data.RefreshToken);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — OLD TOKEN WAS REVOKED ──────────────
-        // This is the exact security guarantee we manually
-        // proved earlier with curl — now automated
         mockRefreshTokenRepo.Verify(
             repo => repo.RevokeAsync(oldRefreshToken, It.IsAny<CancellationToken>()),
             Times.Once);
-        // ─────────────────────────────────────────────────
 
-        // ── VERIFY — NEW TOKEN WAS SAVED ─────────────────
         mockRefreshTokenRepo.Verify(
             repo => repo.CreateAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()),
             Times.Once);
-        // ─────────────────────────────────────────────────
     }
 
     [Fact]
     public async Task RefreshTokenAsync_RevokedToken_ShouldReturnFailure()
     {
         // ── ARRANGE ────────────────────────────────────
-        // This is the exact scenario we manually tested with curl:
-        // reusing an already-used (revoked) refresh token
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
         var tokenService = CreateTestTokenService();
 
         var revokedToken = new RefreshToken
@@ -364,9 +380,8 @@ public class AuthServiceTests
             Token = "already-used-token",
             UserId = "user-123",
             ExpiresAt = DateTime.UtcNow.AddDays(5),
-            IsRevoked = true // ALREADY revoked — this is the key condition
+            IsRevoked = true
         };
-        // ─────────────────────────────────────────────────
 
         mockRefreshTokenRepo
             .Setup(repo => repo.GetByTokenAsync("already-used-token", It.IsAny<CancellationToken>()))
@@ -376,7 +391,8 @@ public class AuthServiceTests
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -388,11 +404,9 @@ public class AuthServiceTests
         Assert.Equal("Invalid or expired refresh token", result.ErrorMessage);
         // ─────────────────────────────────────────────────
 
-        // ── VERIFY — NO NEW TOKEN WAS ISSUED ────────────
         mockRefreshTokenRepo.Verify(
             repo => repo.CreateAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()),
             Times.Never);
-        // ─────────────────────────────────────────────────
     }
 
     [Fact]
@@ -402,6 +416,7 @@ public class AuthServiceTests
         var mockUserManager = CreateMockUserManager();
         var mockSignInManager = CreateMockSignInManager(mockUserManager);
         var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
         var tokenService = CreateTestTokenService();
 
         var expiredToken = new RefreshToken
@@ -409,10 +424,9 @@ public class AuthServiceTests
             Id = 1,
             Token = "expired-token",
             UserId = "user-123",
-            ExpiresAt = DateTime.UtcNow.AddDays(-1), // expired YESTERDAY
+            ExpiresAt = DateTime.UtcNow.AddDays(-1),
             IsRevoked = false
         };
-        // ─────────────────────────────────────────────────
 
         mockRefreshTokenRepo
             .Setup(repo => repo.GetByTokenAsync("expired-token", It.IsAny<CancellationToken>()))
@@ -422,7 +436,8 @@ public class AuthServiceTests
             mockUserManager.Object,
             mockSignInManager.Object,
             tokenService,
-            mockRefreshTokenRepo.Object);
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
         // ─────────────────────────────────────────────────
 
         // ── ACT ────────────────────────────────────────
@@ -435,4 +450,83 @@ public class AuthServiceTests
         // ─────────────────────────────────────────────────
     }
 
+    // ══════════════════════════════════════════════════════
+    // ConfirmEmailAsync TESTS
+    // ══════════════════════════════════════════════════════
+
+    [Fact]
+    public async Task ConfirmEmailAsync_ValidToken_ShouldSucceed()
+    {
+        // ── ARRANGE ────────────────────────────────────
+        var mockUserManager = CreateMockUserManager();
+        var mockSignInManager = CreateMockSignInManager(mockUserManager);
+        var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
+        var tokenService = CreateTestTokenService();
+
+        var user = new IdentityUser { Id = "user-123", Email = "test@gmail.com" };
+
+        mockUserManager
+            .Setup(um => um.FindByIdAsync("user-123"))
+            .ReturnsAsync(user);
+
+        // ── ENCODE A FAKE TOKEN THE SAME WAY THE REAL CODE DOES ──
+        var rawToken = "fake-identity-token";
+        var encodedToken = Microsoft.AspNetCore.WebUtilities.WebEncoders.Base64UrlEncode(
+            System.Text.Encoding.UTF8.GetBytes(rawToken));
+        // ─────────────────────────────────────────────────────
+
+        mockUserManager
+            .Setup(um => um.ConfirmEmailAsync(user, rawToken))
+            .ReturnsAsync(IdentityResult.Success);
+
+        var authService = new AuthService(
+            mockUserManager.Object,
+            mockSignInManager.Object,
+            tokenService,
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
+        // ─────────────────────────────────────────────────
+
+        // ── ACT ────────────────────────────────────────
+        var result = await authService.ConfirmEmailAsync("user-123", encodedToken, CancellationToken.None);
+        // ─────────────────────────────────────────────────
+
+        // ── ASSERT ─────────────────────────────────────
+        Assert.True(result.IsSuccess);
+        Assert.Contains("confirmed successfully", result.Data);
+        // ─────────────────────────────────────────────────
+    }
+
+    [Fact]
+    public async Task ConfirmEmailAsync_InvalidUserId_ShouldReturnFailure()
+    {
+        // ── ARRANGE ────────────────────────────────────
+        var mockUserManager = CreateMockUserManager();
+        var mockSignInManager = CreateMockSignInManager(mockUserManager);
+        var mockRefreshTokenRepo = new Mock<IRefreshTokenRepository>();
+        var mockEmailService = CreateMockEmailService();
+        var tokenService = CreateTestTokenService();
+
+        mockUserManager
+            .Setup(um => um.FindByIdAsync("nonexistent-user"))
+            .ReturnsAsync((IdentityUser?)null);
+
+        var authService = new AuthService(
+            mockUserManager.Object,
+            mockSignInManager.Object,
+            tokenService,
+            mockRefreshTokenRepo.Object,
+            mockEmailService.Object);
+        // ─────────────────────────────────────────────────
+
+        // ── ACT ────────────────────────────────────────
+        var result = await authService.ConfirmEmailAsync("nonexistent-user", "any-token", CancellationToken.None);
+        // ─────────────────────────────────────────────────
+
+        // ── ASSERT ─────────────────────────────────────
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Invalid confirmation link", result.ErrorMessage);
+        // ─────────────────────────────────────────────────
+    }
 }

@@ -15,5 +15,5 @@ public interface IAuthService
     // Takes an old refresh token, validates it, and if valid,
     // issues a brand new AuthResult (new access + new refresh token)
     Task<Result<AuthResult>> RefreshTokenAsync(string refreshToken, CancellationToken cancellationToken);
-    
+    Task<Result<string>> ConfirmEmailAsync(string userId, string token, CancellationToken cancellationToken);
 }

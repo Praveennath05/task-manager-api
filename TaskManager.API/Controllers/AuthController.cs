@@ -54,4 +54,23 @@ public class AuthController : ControllerBase
             : Unauthorized(result.ErrorMessage);
     }
     // ─────────────────────────────────────────────────
+    // ── CONFIRM EMAIL ENDPOINT ─────────────────────────
+    // GET api/auth/confirm-email?userId=...&token=...
+    // This is the exact URL the confirmation email links to
+    // GET (not POST) because the user reaches it by clicking
+    // a link in their email, not submitting a form
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail([FromQuery] string userId, [FromQuery] string token)
+    {
+        var command = new ConfirmEmailCommand(userId, token);
+        var result = await _mediator.Send(command);
+
+        return result.IsSuccess
+            ? Ok(result.Data)
+            : BadRequest(result.ErrorMessage);
+    }
+    // ─────────────────────────────────────────────────
+
 }
+
+

@@ -1,1 +1,28 @@
 2026-07-11 12:36:00.731 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-11 12:36:01.193 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-11 12:36:02.644 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-11 12:36:02.650 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-11 12:36:02.652 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-11 12:36:02.652 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-11 12:36:02.664 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-11 12:36:02.666 +05:30 [INF] Hosting environment: Development
+2026-07-11 12:36:02.667 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-11 12:36:02.688 +05:30 [INF] Server asus:47152:51ccbc7c successfully announced in 23.4296 ms
+2026-07-11 12:36:02.692 +05:30 [INF] Server asus:47152:51ccbc7c is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-11 12:36:02.697 +05:30 [INF] Server asus:47152:51ccbc7c all the dispatchers started
+2026-07-11 12:36:02.702 +05:30 [INF] 1 servers were removed due to timeout
+2026-07-11 12:36:03.007 +05:30 [INF] Starting overdue task check at "2026-07-11T07:06:03.0067096Z"
+2026-07-11 12:36:03.093 +05:30 [INF] No new overdue tasks found
+2026-07-11 12:36:03.101 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-11 12:36:07.998 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-11 12:36:08.072 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-11 15:04:44.930 +05:30 [INF] Server asus:47152:51ccbc7c caught stopping signal...
+2026-07-11 15:04:44.955 +05:30 [INF] Application is shutting down...
+2026-07-11 15:04:45.468 +05:30 [INF] Server asus:47152:51ccbc7c caught stopped signal...
+2026-07-11 15:04:45.841 +05:30 [INF] Server asus:47152:51ccbc7c All dispatchers stopped
+2026-07-11 15:04:45.850 +05:30 [INF] Server asus:47152:51ccbc7c successfully reported itself as stopped in 6.5578 ms
+2026-07-11 15:04:45.852 +05:30 [INF] Server asus:47152:51ccbc7c has been stopped in total 896.9116 ms
