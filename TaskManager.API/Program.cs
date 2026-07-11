@@ -5,6 +5,7 @@ using TaskManager.Application;
 using TaskManager.Infrastructure;
 using Serilog;
 using Hangfire;
+using Microsoft.AspNetCore.RateLimiting;
 
 
 // ── SERILOG BOOTSTRAP LOGGER ───────────────────────────
@@ -78,6 +79,20 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddControllers();
+// ── RATE LIMITING ──────────────────────────────────────
+builder.Services.AddRateLimiter(options =>
+{
+    // ── LOGIN/REGISTER POLICY ────────────────────────
+    // Max 5 attempts per minute, per client IP
+    // After that, requests get rejected with 429 Too Many Requests
+    options.AddFixedWindowLimiter("AuthPolicy",limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 5;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueLimit = 0;
+    });
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
 builder.Services.AddEndpointsApiExplorer();
 
 // ── NSWAG — OpenAPI + Swagger UI ──────────────────────
@@ -116,6 +131,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseRateLimiter();
 app.UseAuthorization();
 // ── HANGFIRE DASHBOARD ───────────────────────────────────
 if (app.Environment.IsDevelopment())

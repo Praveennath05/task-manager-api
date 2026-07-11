@@ -98,3 +98,25 @@ System.InvalidOperationException: Scheme already exists: External
    at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
    at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
    at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-07-10 10:07:29.226 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-10 10:07:29.535 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-10 10:07:30.604 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-10 10:07:30.610 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-10 10:07:30.611 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-10 10:07:30.611 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-10 10:07:30.623 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-10 10:07:30.624 +05:30 [INF] Hosting environment: Development
+2026-07-10 10:07:30.625 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-10 10:07:30.643 +05:30 [INF] Server asus:41352:6445f891 successfully announced in 20.2618 ms
+2026-07-10 10:07:30.646 +05:30 [INF] Server asus:41352:6445f891 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-10 10:07:30.653 +05:30 [INF] Server asus:41352:6445f891 all the dispatchers started
+2026-07-10 10:07:31.220 +05:30 [INF] Starting overdue task check at "2026-07-10T04:37:31.2203265Z"
+2026-07-10 10:07:31.310 +05:30 [WRN] Task marked overdue: Id=1004, Title=Email Test Task, DueDate="2026-07-09T12:10:18.0000000"
+2026-07-10 10:07:32.673 +05:30 [INF] Email sent successfully to test@gmail.com
+2026-07-10 10:07:32.681 +05:30 [INF] Overdue check complete. Flagged: 1, Un-flagged: 0
+2026-07-10 10:07:51.808 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-10 10:09:11.106 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.

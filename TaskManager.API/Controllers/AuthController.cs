@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.Features.Auth.Commands;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace TaskManager.API.Controllers;
 
@@ -16,6 +17,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [EnableRateLimiting("AuthPolicy")]
     public async Task<IActionResult> Register([FromBody] RegisterCommand command)
     {
         var result = await _mediator.Send(command);
@@ -28,6 +30,7 @@ public class AuthController : ControllerBase
     // POST api/auth/login
     // Now returns BOTH tokens — result.Data is an AuthResult
     [HttpPost("login")]
+    [EnableRateLimiting("AuthPolicy")]
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
         var result = await _mediator.Send(command);
