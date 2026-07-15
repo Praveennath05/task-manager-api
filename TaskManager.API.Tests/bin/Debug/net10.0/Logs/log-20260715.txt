@@ -1,0 +1,23 @@
+2026-07-15 16:35:54.578 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-15 16:35:55.121 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-15 16:35:56.766 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-15 16:35:56.767 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-15 16:35:56.767 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-15 16:35:56.777 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-15 16:35:56.778 +05:30 [INF] Hosting environment: Development
+2026-07-15 16:35:56.778 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-15 16:35:56.788 +05:30 [INF] Server asus:7600:1ec5e242 successfully announced in 9.9023 ms
+2026-07-15 16:35:56.790 +05:30 [INF] Server asus:7600:1ec5e242 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-15 16:35:56.810 +05:30 [INF] Server asus:7600:1ec5e242 all the dispatchers started
+2026-07-15 16:35:57.002 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-15 16:35:58.384 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-15 16:35:58.943 +05:30 [INF] Server asus:7600:1ec5e242 caught stopping signal...
+2026-07-15 16:35:58.945 +05:30 [INF] Application is shutting down...
+2026-07-15 16:35:59.448 +05:30 [INF] Server asus:7600:1ec5e242 caught stopped signal...
+2026-07-15 16:35:59.825 +05:30 [INF] Server asus:7600:1ec5e242 All dispatchers stopped
+2026-07-15 16:35:59.831 +05:30 [INF] Server asus:7600:1ec5e242 successfully reported itself as stopped in 4.0267 ms
+2026-07-15 16:35:59.831 +05:30 [INF] Server asus:7600:1ec5e242 has been stopped in total 886.9169 ms

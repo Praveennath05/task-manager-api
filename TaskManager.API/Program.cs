@@ -155,3 +155,8 @@ RecurringJob.AddOrUpdate<TaskManager.Domain.Interfaces.ITaskReminderJob>(
 
 
 app.Run();
+// ── MAKE PROGRAM ACCESSIBLE TO INTEGRATION TESTS ──────
+// Top-level statements create an implicit internal Program class
+// This partial class declaration makes it public so
+// WebApplicationFactory<Program> in the test project can find it
+public partial class Program { }
