@@ -26,3 +26,33 @@
 2026-07-11 15:04:45.841 +05:30 [INF] Server asus:47152:51ccbc7c All dispatchers stopped
 2026-07-11 15:04:45.850 +05:30 [INF] Server asus:47152:51ccbc7c successfully reported itself as stopped in 6.5578 ms
 2026-07-11 15:04:45.852 +05:30 [INF] Server asus:47152:51ccbc7c has been stopped in total 896.9116 ms
+2026-07-11 16:06:11.334 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-11 16:06:12.020 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-11 16:06:13.888 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-11 16:06:13.894 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-11 16:06:13.895 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-11 16:06:13.896 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-11 16:06:13.906 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-11 16:06:13.907 +05:30 [INF] Hosting environment: Development
+2026-07-11 16:06:13.908 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-11 16:06:13.932 +05:30 [INF] Server asus:46440:c5f7f17f successfully announced in 26.1503 ms
+2026-07-11 16:06:13.935 +05:30 [INF] Server asus:46440:c5f7f17f is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-11 16:06:13.941 +05:30 [INF] Server asus:46440:c5f7f17f all the dispatchers started
+2026-07-11 16:08:09.155 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-11 16:08:10.445 +05:30 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-11 16:08:12.277 +05:30 [INF] Email sent successfully to praveennath.r2004@gmail.com
+2026-07-11 16:12:18.760 +05:30 [WRN] Validation failed: Invalid email format
+2026-07-11 16:14:33.631 +05:30 [INF] Email sent successfully to pravinnath05200410@gmail.com
+2026-07-11 17:23:15.086 +05:30 [INF] 1 servers were removed due to timeout
+2026-07-11 17:23:16.184 +05:30 [WRN] Server asus:46440:c5f7f17f was considered dead by other servers, restarting...
+2026-07-11 17:23:16.188 +05:30 [INF] Server asus:46440:c5f7f17f caught restart signal...
+2026-07-11 17:23:16.193 +05:30 [WRN] Server asus:46440:c5f7f17f stopped non-gracefully due to ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2026-07-11 17:23:16.204 +05:30 [INF] Server asus:46440:c5f7f17f successfully reported itself as stopped in 5.5908 ms
+2026-07-11 17:23:16.206 +05:30 [INF] Server asus:46440:c5f7f17f has been stopped in total 14.7745 ms
+2026-07-11 17:23:16.216 +05:30 [INF] Server asus:46440:5f6b8305 successfully announced in 9.3079 ms
+2026-07-11 17:23:16.219 +05:30 [INF] Server asus:46440:5f6b8305 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-11 17:23:16.234 +05:30 [INF] Server asus:46440:5f6b8305 all the dispatchers started

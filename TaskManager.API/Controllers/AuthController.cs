@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.Features.Auth.Commands;
 using Microsoft.AspNetCore.RateLimiting;
+using System.Security.Claims;
 
 namespace TaskManager.API.Controllers;
 
@@ -70,6 +71,30 @@ public class AuthController : ControllerBase
             : BadRequest(result.ErrorMessage);
     }
     // ─────────────────────────────────────────────────
+// ── LOGOUT ENDPOINT ────────────────────────────────
+    // POST api/auth/logout
+    // Requires a valid JWT (the one being logged out) —
+    // blacklists it so it can't be used again even though
+    // it hasn't technically expired yet
+    [HttpPost("logout")]
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        var jti = User.FindFirstValue(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti);
+        var expClaim = User.FindFirstValue(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Exp);
+
+        if (string.IsNullOrEmpty(jti) || string.IsNullOrEmpty(expClaim) || !long.TryParse(expClaim, out var expSeconds))
+            return BadRequest("Unable to process logout");
+
+        var tokenExpiry = DateTimeOffset.FromUnixTimeSeconds(expSeconds).UtcDateTime;
+
+        var command = new LogoutCommand(jti, tokenExpiry);
+        var result = await _mediator.Send(command);
+
+        return result.IsSuccess ? Ok(result.Data) : BadRequest(result.ErrorMessage);
+    }
+    // ─────────────────────────────────────────────────
+
 
 }
 

@@ -133,6 +133,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseRateLimiter();
 app.UseAuthorization();
+app.UseMiddleware<TaskManager.API.Middleware.BlacklistCheckMiddleware>();
 // ── HANGFIRE DASHBOARD ───────────────────────────────────
 if (app.Environment.IsDevelopment())
 {
