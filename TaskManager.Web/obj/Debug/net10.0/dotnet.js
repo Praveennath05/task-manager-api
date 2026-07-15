@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaskManager.Web",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-Hen4PAJYagdPDhaDSOCyw3WKJywr2CDc06O+ZAbPVc8=",
+    "hash": "sha256-ZRrk/F1wksgU67KuWFyIMEcKiHSaSEJ8iDNlk0N+jpQ=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.puryxhmhq9.js"
@@ -1242,16 +1242,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaskManager.Web.wasm",
-        "name": "TaskManager.Web.n10laqnpbi.wasm",
-        "hash": "sha256-hWqaaHbP7G//CNOaLKB7E4Ta3WZoX6mJovJihFaoghQ=",
+        "name": "TaskManager.Web.oz8ql6xuap.wasm",
+        "hash": "sha256-BE2XiGmKOfMxMX8SSfUpuHysHJPnASad/uVMcI8EhiU=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaskManager.Web.pdb",
-        "name": "TaskManager.Web.05egxvr9em.pdb",
-        "hash": "sha256-lDhQam754fQGCkgC63G1OFe4JFDUjcYrtvhMWpMKHt0=",
+        "name": "TaskManager.Web.7cfmetxhqy.pdb",
+        "hash": "sha256-2VZ/GO5dHg+FD4YbhEcLaihZxslo66k9hPvLAZVMD98=",
         "cache": "force-cache"
       }
     ],

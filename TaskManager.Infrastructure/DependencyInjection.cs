@@ -20,20 +20,26 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
                 "Server=ASUS;Database=TaskManagerDb;Trusted_Connection=True;TrustServerCertificate=True"));
-        Console.WriteLine($"[DEBUG] Redis connection string: {configuration.GetConnectionString("Redis")}");
         // ─────────────────────────────────────────────────────
 
         // ── ASP.NET CORE IDENTITY ─────────────────────────────
-        services.AddIdentity<IdentityUser, IdentityRole>(options =>
-        {
-            // Password rules — relax for development, tighten for production
-            options.Password.RequireDigit = true;
-            options.Password.RequiredLength = 8;
-            options.Password.RequireUppercase = true;
-            options.Password.RequireNonAlphanumeric = false;
-        })
-        .AddEntityFrameworkStores<AppDbContext>()
-        .AddDefaultTokenProviders();
+       services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+
+    // ── ACCOUNT LOCKOUT ──────────────────────────────
+    // Explicit rather than relying on Identity's implicit defaults
+    // After 5 failed login attempts, lock the account for 5 minutes
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.AllowedForNewUsers = true;
+    // ─────────────────────────────────────────────────
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
         // ─────────────────────────────────────────────────────
 
         // ── DEPENDENCY INJECTION ──────────────────────────────
