@@ -1,0 +1,58 @@
+@page "/login"
+@using TaskManager.Web.Services
+@using TaskManager.Web.Models
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+
+<h3>Login</h3>
+
+<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText @bind-Value="loginModel.Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+@code {
+    // ── FORM MODEL ─────────────────────────────────────
+    // EditForm binds directly to this object's properties
+    private LoginRequest loginModel = new();
+    private string? errorMessage;
+    // ─────────────────────────────────────────────────
+
+    // ── HANDLE SUBMIT ───────────────────────────────────
+    // Called automatically by EditForm when the form is
+    // submitted AND passes validation
+    private async Task HandleLogin()
+    {
+        errorMessage = null;
+
+        var result = await AuthService.LoginAsync(loginModel.Email, loginModel.Password);
+
+        if (result == null)
+        {
+            errorMessage = "Invalid email or password, or email not confirmed.";
+            return;
+        }
+
+        // ── LOGIN SUCCEEDED ────────────────────────────
+        // Token storage comes in the NEXT step — for now,
+        // just prove the login call itself works end-to-end
+        Console.WriteLine($"Login successful! Token: {result.AccessToken}");
+        Navigation.NavigateTo("/");
+        // ─────────────────────────────────────────────
+    }
+    // ─────────────────────────────────────────────────
+}
