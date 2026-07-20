@@ -114,6 +114,15 @@ builder.Services.AddOpenApiDocument(config =>
     config.OperationProcessors.Add(
         new NSwag.Generation.Processors.Security.AspNetCoreOperationSecurityScopeProcessor("JWT"));
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorClient", policy =>
+    {
+        policy.WithOrigins("http://localhost:5022")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 
 
@@ -131,6 +140,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseCors("AllowBlazorClient");
 app.UseRateLimiter();
 app.UseAuthorization();
 app.UseMiddleware<TaskManager.API.Middleware.BlacklistCheckMiddleware>();

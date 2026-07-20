@@ -1,0 +1,20 @@
+2026-07-20 19:26:39.805 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-20 19:26:40.480 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-20 19:26:42.472 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-20 19:26:42.478 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-20 19:26:42.478 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-20 19:26:42.479 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-20 19:26:42.491 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-20 19:26:42.492 +05:30 [INF] Hosting environment: Development
+2026-07-20 19:26:42.493 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-20 19:26:42.513 +05:30 [INF] Server asus:30696:f98175ea successfully announced in 22.1905 ms
+2026-07-20 19:26:42.516 +05:30 [INF] Server asus:30696:f98175ea is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-20 19:26:42.521 +05:30 [INF] Server asus:30696:f98175ea all the dispatchers started
+2026-07-20 19:26:43.055 +05:30 [INF] Starting overdue task check at "2026-07-20T13:56:43.0551332Z"
+2026-07-20 19:26:43.129 +05:30 [INF] No new overdue tasks found
+2026-07-20 19:26:43.136 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-20 19:27:23.689 +05:30 [WRN] Failed to determine the https port for redirect.
