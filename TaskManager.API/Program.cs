@@ -138,13 +138,12 @@ if (app.Environment.IsDevelopment())
     
 }
 
-app.UseHttpsRedirection();
-app.UseAuthentication();
 app.UseCors("AllowBlazorClient");
+app.UseHttpsRedirection();
 app.UseRateLimiter();
+app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<TaskManager.API.Middleware.BlacklistCheckMiddleware>();
-// ── HANGFIRE DASHBOARD ───────────────────────────────────
+app.UseMiddleware<TaskManager.API.Middleware.BlacklistCheckMiddleware>();// ── HANGFIRE DASHBOARD ───────────────────────────────────
 if (app.Environment.IsDevelopment())
 {
     app.UseHangfireDashboard("/hangfire");

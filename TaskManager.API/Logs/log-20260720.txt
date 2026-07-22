@@ -18,3 +18,9 @@
 2026-07-20 19:26:43.129 +05:30 [INF] No new overdue tasks found
 2026-07-20 19:26:43.136 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
 2026-07-20 19:27:23.689 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-20 19:33:47.149 +05:30 [INF] Server asus:30696:f98175ea caught stopping signal...
+2026-07-20 19:33:47.165 +05:30 [INF] Application is shutting down...
+2026-07-20 19:33:47.674 +05:30 [INF] Server asus:30696:f98175ea caught stopped signal...
+2026-07-20 19:33:47.862 +05:30 [INF] Server asus:30696:f98175ea All dispatchers stopped
+2026-07-20 19:33:47.867 +05:30 [INF] Server asus:30696:f98175ea successfully reported itself as stopped in 3.4135 ms
+2026-07-20 19:33:47.868 +05:30 [INF] Server asus:30696:f98175ea has been stopped in total 703.7078 ms

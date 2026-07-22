@@ -1,0 +1,26 @@
+2026-07-22 15:32:44.049 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-07-22 15:32:44.912 +05:30 [INF] Hangfire SQL objects installed.
+2026-07-22 15:32:47.695 +05:30 [INF] Now listening on: http://localhost:5097
+2026-07-22 15:32:47.702 +05:30 [INF] Starting Hangfire Server using job storage: 'SQL Server: ASUS@TaskManagerDb'
+2026-07-22 15:32:47.703 +05:30 [INF] Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+2026-07-22 15:32:47.703 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-07-22 15:32:47.724 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-22 15:32:47.727 +05:30 [INF] Hosting environment: Development
+2026-07-22 15:32:47.729 +05:30 [INF] Content root path: D:\TaskManager\TaskManager.API
+2026-07-22 15:32:47.756 +05:30 [INF] Server asus:18384:d1645743 successfully announced in 32.8908 ms
+2026-07-22 15:32:47.760 +05:30 [INF] Server asus:18384:d1645743 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-07-22 15:32:47.770 +05:30 [INF] Server asus:18384:d1645743 all the dispatchers started
+2026-07-22 15:32:48.732 +05:30 [INF] Starting overdue task check at "2026-07-22T10:02:48.7316032Z"
+2026-07-22 15:32:48.875 +05:30 [INF] No new overdue tasks found
+2026-07-22 15:32:48.884 +05:30 [INF] Overdue check complete. Flagged: 0, Un-flagged: 0
+2026-07-22 15:33:55.465 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-07-22 15:40:47.092 +05:30 [INF] Server asus:18384:d1645743 caught stopping signal...
+2026-07-22 15:40:47.107 +05:30 [INF] Application is shutting down...
+2026-07-22 15:40:47.616 +05:30 [INF] Server asus:18384:d1645743 caught stopped signal...
+2026-07-22 15:40:47.840 +05:30 [INF] Server asus:18384:d1645743 All dispatchers stopped
+2026-07-22 15:40:47.848 +05:30 [INF] Server asus:18384:d1645743 successfully reported itself as stopped in 5.3796 ms
+2026-07-22 15:40:47.849 +05:30 [INF] Server asus:18384:d1645743 has been stopped in total 742.2246 ms
