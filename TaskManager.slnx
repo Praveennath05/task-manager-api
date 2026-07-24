@@ -5,5 +5,4 @@
   <Project Path="TaskManager.Application/TaskManager.Application.csproj" />
   <Project Path="TaskManager.Domain/TaskManager.Domain.csproj" />
   <Project Path="TaskManager.Infrastructure/TaskManager.Infrastructure.csproj" />
-  <Project Path="TaskManager.Web/TaskManager.Web.csproj" />
 </Solution>
